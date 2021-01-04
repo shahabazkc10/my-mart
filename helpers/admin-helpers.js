@@ -16,6 +16,7 @@ module.exports = {
             let adminUsername = await db.get().collection(collection.ADMIN_COLLECTION).findOne({ username: admins.username })
             let adminPassword = await db.get().collection(collection.ADMIN_COLLECTION).findOne({ password: pass })
             if (adminUsername && adminPassword) {
+                console.log("same found");
             }
             else {
                 admins.password = admins.password.toString()

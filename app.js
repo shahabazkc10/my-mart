@@ -25,9 +25,10 @@ app.use(fileUpload())
 
 app.use(session({secret:"key",cookie:{maxAge:6000000}}))
 app.use(express.static(path.join(__dirname, 'public')));
-db.connect((err) => {
+db.connect((err,data) => {
+  console.log(data);
   if (err) {
-    console.log("connection failed"+err);
+    console.log(err);
   }
   else {
     console.log("Database connected successfully");
