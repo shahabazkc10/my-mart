@@ -1,0 +1,44 @@
+<div class="main">
+    <div class="navbar justify-content-end">
+        <div class="navbar-item">
+            <a class="btn btn-primary">{{response}}</a>
+            <a href="/vendor/logout" class="btn btn-danger">Logout</a>
+        </div>
+    </div>
+</div>0
+<div class="main">
+    <div class="m-5">
+        <section>
+            <div>
+                <h4><i class="fas fa-user-tie"> Users</i></h4>
+                <div class="float-right"><a href="/vendor/add-user" class="btn btn-primary">Add User</a></div>
+            </div>
+        </section>
+        <section>
+            <table class="table" style="width: 100%;">
+                <thead>
+                    <tr style="color: grey;">
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>No of Orders</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each users}}
+                    <tr>
+                        <td>{{this.username}}<br>{{this.phonenumber}}</td>
+                        <td>{{this.address}}</td>
+                        <td>{{this.orders}}</td>
+                        <td>
+                            <a href="/vendor/user-edit/{{this._id}}" class="btn btn-success">Edit</a>
+                            <a href="/vendor/user-ban/{{this._id}}" onclick="return confirm('Are you sure you need to ban {{this.username}} from User?')" class="btn btn-danger">Ban</a>
+                            <a href="/vendor/user-delete/{{this._id}}" onclick="return confirm('Are you sure you need to delete {{this.username}} from user?')" class="btn btn-dark text-light">Delete</a>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+</div>

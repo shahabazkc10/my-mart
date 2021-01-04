@@ -1,0 +1,68 @@
+<center>
+    <h1>Your Order is succesfull</h1>
+</center>
+<section>
+    <div class="container mt-5">
+        <h5>Ordered on: {{orderDetail.date}}</h5><br>
+        <div class="row">
+            <div class="col-6">
+                <b>Customer detail</b>
+                <address>
+                    {{orderDetail.deliveryDetails.name}}<br>{{orderDetail.deliveryDetails.address}},
+                    {{orderDetail.deliveryDetails.town}}<br> {{orderDetail.deliveryDetails.state}}
+                    {{orderDetail.deliveryDetails.pincode}}
+                </address>
+            </div>
+            <div class="col-6">
+                <b>Seller detail</b>
+                <address>
+                    {{vendorDetail.username}}<br>{{vendorDetail.storename}},
+                    {{vendorDetail.address}}<br> {{vendorDetail.phonenumber}}
+                </address>
+                <br>
+                <div class="right">
+                    Expected delivery within 2 hours
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <ul class="list-group mb-3 z-depth-1">
+                <li class="list-group-item d-flex justify-content-between">
+                    <span><strong>Total (INR) </strong></span>
+                    <strong> ₹{{orderDetail.totalAmount}}</strong>
+                </li>
+            </ul>
+        </div>
+        <div class="row">
+            <input type="text" id="paymenttype" value="{{orderDetail.paymentGateway}}" hidden>
+            <div id="onone" class="col-12"><b>Online payment</b></div>
+            <div id="ontwo" class="col-12"><label for=""><b>Payment through </b></label><b>
+                    {{orderDetail.paymentGateway}}</b></div>
+            <div id="onthree" class="col-12"><b>Payment: PAID</b></div>
+            <div style="display: none;" id="coone" class="col-12"><label><b>Payment: Not paid</b></div>
+            <div style="display: none;" id="cotwo" class="col-12"></label><b>Order method: {{orderDetail.paymentGateway}}</b></div>
+
+        </div>
+
+    </div>
+    <div class="gotwo container" align="center"><a href="/view-orders"><button class="btn btn-primary btn-lg">View
+                Orders</button></a></div>
+</section>
+<script>
+    let paymentmode = document.getElementById('paymenttype').value;
+    console.log(paymentmode)
+    if (paymentmode == 'cod') {
+        document.getElementById('onone').style.display = 'none';
+        document.getElementById('ontwo').style.display = 'none';
+        document.getElementById('onthree').style.display = 'none';
+        document.getElementById('coone').style.display = 'block';
+        document.getElementById('cotwo').style.display = 'block';
+    }
+</script>
+
+<script>
+history.pushState({ page: 1 }, "title 1", "#nbb");
+window.onhashchange = function (event) {
+    window.location.hash = "nbb";
+};
+</script>

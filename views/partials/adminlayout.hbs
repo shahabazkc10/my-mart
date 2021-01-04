@@ -1,0 +1,96 @@
+<style>
+    body {
+        background-color: #363740;
+    }
+
+    .sidenav {
+        height: 100%;
+        /* Full-height: remove this if you want "auto" height */
+        width: 140px;
+        /* Set the width of the sidebar */
+        position: fixed;
+        /* Fixed Sidebar (stay in place on scroll) */
+        z-index: 1;
+        /* Stay on top */
+        top: 2px;
+        /* Stay at the top */
+        left: 0;
+        background-color: #363740;
+        /* Black */
+        overflow-x: hidden;
+        /* Disable horizontal scroll */
+        padding-top: 20px;
+        border-right: white 3px solid;
+    }
+
+    .main {
+        margin-left: 160px;
+        /* Same as the width of the sidebar */
+        padding: 0px 10px;
+    }
+
+    /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+    @media screen and (max-height: 450px) {
+        .sidenav {
+            padding-top: 15px;
+        }
+
+        .sidenav a {
+            font-size: 18px;
+        }
+    }
+
+    li:hover {
+        background-color: red;
+    }
+
+    hr {
+        border-top: 1px solid white;
+    }
+</style>
+
+
+
+<div class="sidenav ml-2">
+    <ul class="list-unstyled" style="text-decoration: none;">
+        <a href="/admin" style="text-decoration: none;">
+            <li style="color:white ;pointer-events: none;" class="mb-5">
+                <img style="height: 100px;width:80%"
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScTdDSx_zl4PCBSsHiOCYl4NFjHFKAfav15g&usqp=CAU"
+                    alt="">
+                Dashboard Kit
+            </li>
+        </a>
+        <a href="/admin/">
+            <li style="margin-top: 60%;">
+                <hr>
+                <i class="fa fa-group" style="color: white;"> Dealer</i>
+                <hr>
+            </li>
+        </a>
+        <a href="/admin/users">
+            <li>
+                <hr>
+                <i style="color: white;" class="fas fa-user-tie"> Users</i>
+                <hr>
+            </li>
+        </a>
+        <a href="/admin/settings">
+            <li>
+                <hr>
+                <i style="color: white;" class="fa fa-gear"> Settings</i>
+                <hr>
+            </li>
+        </a>
+        <a href="/admin/others">
+            <li>
+                <hr>
+                <i style="color: white;" class="fa fa-dedent"> Other</i>
+                <hr>
+            </li>
+        </a>
+    </ul>
+
+
+
+</div>

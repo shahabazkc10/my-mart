@@ -1,0 +1,76 @@
+<style>
+    .dot {
+        height: 105px;
+        width: 105px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+    }
+</style>
+<div class="container">
+    <h1>Edit product</h1>
+    <div class="section">
+        <form action="/vendor/edit-product/{{this.product._id}}" method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-8">
+                    <label for="">Product name</label>
+                    <input type="text" id="name" value="{{this.product.name}}" required name="name"
+                        class="form-control">
+                    <label for="">Category</label>
+                    <select name="category" id="category" class="form-control">
+                        <option value="{{this.product.category}}">{{this.product.category}}</option>
+                        {{#each category}}
+                        <option value="{{this.name}}">{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                    <label for="">Product type</label>
+                    <select name="quantitytype" id="quantitytype" class="form-control">
+                        <option value="{{this.product.quantitytype}}">{{this.product.quantitytype}}</option>
+                        {{#if type}}
+                        <option value="Pieces">Pieces</option>
+                        {{else}}
+                        <option value="kilogram">kilogram</option>
+                        {{/if}}
+                    </select>
+                    <label for="">Price</label>
+                    <input type="number" id="price" value="{{this.product.price}}" required name="price"
+                        class="form-control">
+                    <label for="">Stock</label>
+                    <input type="number" id="stock" value="{{this.product.stock}}" required name="stock"
+                        class="form-control">
+                    <label for="">Product Description</label>
+                    <textarea name="description" class="form-control" id="description" cols="30"
+                        rows="8">{{this.product.description}}</textarea>
+                    <input type="text" class="form-control" hidden value="{{response}}" name="vendor">
+                    <input type="text" hidden value="{{storename}}" name="storename">
+                    <input type="text" hidden value="{{storeId}}" name="storeId">
+                </div>
+                <div class="col-4">
+                    <label for="">Product photo</label><br>
+                    <img id="imageDisplay" src="/product-images/{{this.product._id}}.jpg" alt=""
+                        style="width: 105px;height: 105px;" class="rounded-circle"><br>
+                    <input type="button" onclick="profileClick()" value="Change photo" id="addPhoto"
+                        class="btn btn-primary">
+                    <input onchange="loadFile(event)" hidden name="Image" id="Image" type="file">
+                </div>
+                <button type="submit" class="btn btn-lg btn-primary ml-3 mt-2">Update Product</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    var loadFile = function (event) {
+        var image = document.getElementById('imageDisplay');
+        image.src = URL.createObjectURL(event.target.files[0]);
+        document.getElementById('imageDisplay').style.display = "block";
+        document.getElementById('addPhoto').value = "Change photo";
+        $('#productbtn').hide()
+    }
+    function profileClick() {
+        $('#Image').click()
+
+    }
+
+
+
+</script>

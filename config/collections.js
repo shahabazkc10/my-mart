@@ -1,0 +1,14 @@
+module.exports={
+    ADMIN_COLLECTION:'admin',
+    VENDOR_COLLECTION:'vendor',
+    USER_COLLECTION:'user',
+    PRODUCTS_COLLECTION:'product',
+    ORDER_COLLECTION:'order',
+    CART_COLLECTION:'cart',
+    BANNED_COLLECTION:'banned',
+    DISABLEPRODUCT_COLLECTION:'disableproduct',
+    BANNED_USER_COLLECTION:'banneduser',
+    CATEGORY_COLLECTION:'category',
+    ADDRESS_COLLECTION:'address',
+    ORDER_STATUS_COLLECTION:'order-status'
+}

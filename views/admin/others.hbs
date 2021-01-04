@@ -1,0 +1,49 @@
+<div class="content main bg-light mt-5">
+    <center>
+        <h1>Order Status Manage</h1>
+    </center>
+    <div class="main">
+
+        <h4>Create order status</h4>
+        <form id="newstatus" action="">
+            <div class="row mb-5">
+
+                <div class="col-6 mb-5">
+                    <input type="text" name="status" class="form-control" placeholder="Enter new order Status">
+
+                </div>
+                <div class="col-4">
+                    <button type="submit" class="btn btn-primary">Add new Status</button>
+                </div>
+
+            </div>
+        </form>
+        <div class="section">
+            <h4>All Order Status</h4>
+            <div class="statuses">
+                <ul>
+                    {{#each status}}
+                    <li style="pointer-events: none;">
+                        {{this.status}}
+                    </li>
+                    {{/each}}
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('#newstatus').on('submit', function (e) {
+        e.preventDefault();
+        var data = $(this).serialize();
+        $.ajax({
+            type: 'post',
+            url: '/admin/newstatus',
+            data: data,
+            success: function () {
+                location.replace('/admin/others')
+            }
+        })
+    })
+</script>

@@ -1,0 +1,63 @@
+<div class="main">
+    <div class="navbar justify-content-end">
+        <div class="navbar-item">
+            <a class="btn btn-primary">{{response}}</a>
+            <a href="/vendor/logout" class="btn btn-danger">Logout</a>
+        </div>
+
+    </div>
+</div>
+<div class="main">
+    <div class="section ml-4">
+        <div class="icon">
+            <h3><i class="fas fa-book ">Order History</i></h3>
+        </div>
+        <div class="mt-5" style="width: 100%;">
+            {{#each orders}}
+            <div class="row mt-1">
+                <div class="col-12">
+                    <section style="background-color: #B5D7F4;border: 1px solid black">
+                        <table style="width:100%;">
+                            <tr style="border: hidden;">
+                                <td>
+                                    <i class="fas fa-map-marker-alt ml-3">{{this.deliveryDetails.town}}</i>
+                                </td>
+                                <td class="mr-2"><b>{{this.deliveryDetails.name}}</b></td>
+                                <td><b>Delivered on &nbsp;{{this.deliveredOn}}</b></td>
+                            </tr>
+                        </table>
+                        <div class="container">
+
+                                    <table style="border: hidden;width: 50%;">
+                                        <tr style="border: hidden;">
+                                        <tr>
+                                            <h5 class="mt-4">Ordered Items</h5>
+                                        </tr>
+                                        {{#each this.products}}
+                                        <td>{{this.name}}</td>
+                                        <td>{{this.quantity}} ({{this.quantitytype}})</td>
+                                        <td>x</td>
+                                        <td>₹{{this.price}}</td>
+                                        <td>=</td>
+                                        <td>₹{{this.totalPrice}}</td>
+                                        </tr>
+                                        {{/each}}
+                                    </table>
+                                </div>
+                        <div align="right" class="col-12">
+                            <table style="border: hidden;">
+                                <tr style="border: hidden;">
+                                    <td><b style="font-size: 20px;">Total cost </b><b> {{this.totalAmount}}</b></td>
+                                </tr>
+                                <tr>
+                                    <td><b style="font-size: 20px;">Total Items</b><b>{{this.totalItems}}</b></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+<style>
+    .card:hover {
+        background-color: yellow;
+    }
+</style>
+<div class="container">
+    <section>
+        <h3><i class="fas fa-shopping-basket">Your Orders</i></h3>
+        {{#each products}}
+        <a href="view-order-details/{{this._id}}">
+            <div class="card mb-2">
+                <div class="section m-3">
+                    <b>Ordered on: {{this.date}}</b><br>
+                    <b>Order Status: {{this.status}}</b><br>
+                    <b>Total Items: {{this.totalItems}}</b><br>
+                    <b>Total Price: {{this.totalAmount}}</b>
+                </div>
+                <div class="section mb-2 ml-2">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="row">
+                                {{#each this.products}}
+                                <div class="col-2">
+                                    <img class="mb-2 mr-1 ml-1 rounded-circle"
+                                        style="height: 35px;width: 35px;background-color: white;"
+                                        src="/product-images/{{this.item}}.jpg" alt="">
+                                </div>
+
+                                {{/each}}
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </a>
+        {{/each}}
+    </section>
+</div>

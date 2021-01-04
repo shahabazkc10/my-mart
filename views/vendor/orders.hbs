@@ -1,0 +1,137 @@
+<div class="main">
+    <div class="navbar justify-content-end">
+        <div class="navbar-item">
+            <a class="btn btn-primary">{{response}}</a>
+            <a href="/vendor/logout" class="btn btn-danger">Logout</a>
+        </div>
+
+    </div>
+</div>
+<section id="fullData">
+    {{#if orders}}
+    <div id="main" class="main">
+        <div class="section m-4">
+            <div class="icon">
+                <h3><i class="fas fa-shopping-bag ">Orders</i></h3>
+            </div>
+            <div class=" mt-5">
+                <div class="row">
+                    {{#each orders}}
+                    <div class="col-12">
+                        <section style="border: 1px solid black;background-color: #B5D7F4;">
+                            <div class="table table-responsive">
+                                <table style="width: 80%;">
+
+                                    <tr style="border: hidden;">
+                                        <td>
+                                            <h5><i class="fas fa-map-marker-alt">{{this.deliveryDetails.town}}</i></h5>
+                                        </td>
+                                        <td>{{this.deliveryDetails.name}}<br>{{this.deliveryDetails.number}}<br>{{this.deliveryDetails.address}}<br>{{this.deliveryDetails.town}}<br>{{this.deliveryDetails.pincode}}
+                                        </td>
+                                        <td><b>Created on<br>{{this.date}}</b></td>
+                                        <td>
+                                            <form id="form{{this._id}}" action="">
+                                                <select name="status" id="status" class="selectpicker mb-2"
+                                                    data-style="btn-info">
+                                                    <option value="{{this.status}}">{{this.status}}</option>
+                                                    <option value="Order Placed">Order Placed</option>
+                                                    <option value="Order Delivered">Order Delivered</option>
+                                                    <option value="Order Rejected">Order Rejected</option>
+                                                    <option value="Order Pending">Order Pending</option>
+                                                    <option value="Out For Delivery">Out For Delivery</option>
+                                                </select>
+                                                <button type="submit" class="btn btn-primary mr-3">Submit</button>
+                                            </form>
+                                        </td>
+                                        <td><a href="">View</a></td>
+                                    </tr>
+                                </table>
+                                <div class="container">
+
+                                    <table style="border: hidden;width: 50%;">
+                                        <tr style="border: hidden;">
+                                        <tr>
+                                            <h5>Ordered Items</h5>
+                                        </tr>
+                                        {{#each this.products}}
+                                        <td>{{this.name}}</td>
+                                        <td>{{this.quantity}} ({{this.quantitytype}})</td>
+                                        <td>x</td>
+                                        <td>₹{{this.price}}</td>
+                                        <td>=</td>
+                                        <td>₹{{this.totalPrice}}</td>
+                                        </tr>
+                                        {{/each}}
+                                    </table>
+                                </div>
+                                <p><b class="m-3">Payment method: <span
+                                            id="paymentGateway{{this._id}}">{{this.paymentGateway}}</span></b></p>
+                                <p style="display: none;" id="paid{{this._id}}"><b class="m-3">Payment: Paid</b></p>
+                                <p style="display: none;" id="notPaid{{this._id}}"><b class="m-3">Payment: Not paid</b>
+                                </p>
+                                <script>
+                                    $(document).ready(function () {
+                                        let paymentgateway = document.getElementById('paymentGateway{{this._id}}').innerText;
+                                        console.log(paymentgateway)
+                                        if (paymentgateway == 'razorpay') {
+
+
+                                            document.getElementById('paid{{this._id}}').style.display = "block"
+                                        }
+                                        else {
+                                            document.getElementById('notPaid{{this._id}}').style.display = "block"
+                                        }
+                                    })
+
+                                </script>
+                                <div align="right" class="col-12">
+                                    <table style="border: hidden;">
+                                        <tr style="border: hidden;">
+                                            <td><b style="font-size: 20px;">Total cost </b><b style="font-size: 20px;">
+                                                    ₹{{this.totalAmount}}</b></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b style="font-size: 20px;">Total Items</b><b style="font-size: 20px;">
+                                                    {{this.totalItems}}</b></td>
+                                        </tr>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <script>
+                        $('#form{{this._id}}').on('submit', function (e) {
+                            e.preventDefault();
+                            var data = $(this).serialize();
+                            $.ajax({
+                                type: 'post',
+                                url: '/vendor/update-status/{{this._id}}',
+                                data: data,
+                                success:(response) =>{
+                                    location.reload()
+                                
+                                }
+                            })
+                        })
+                    </script>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <div class="container">
+        <center>
+            <h1>No Orders</h1>
+        </center>
+    </div>
+    {{/if}}
+</section>
+
+
+
+
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>

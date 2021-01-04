@@ -1,0 +1,113 @@
+<style>
+    body {}
+
+    .sidenav {
+        height: 100%;
+        /* Full-height: remove this if you want "auto" height */
+        width: 160px;
+        /* Set the width of the sidebar */
+        position: fixed;
+        /* Fixed Sidebar (stay in place on scroll) */
+        z-index: 1;
+        /* Stay on top */
+        top: 0;
+        /* Stay at the top */
+        left: 0;
+        background-color: #363740;
+        /* Black */
+        overflow-x: hidden;
+        /* Disable horizontal scroll */
+        padding-top: 20px;
+        border-right: green 5px solid;
+    }
+
+    hr {
+        border-top: 1px solid white;
+    }
+
+    .main {
+        margin-left: 190px;
+        /* Same as the width of the sidebar */
+        padding: 0px 10px;
+    }
+
+    /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+    @media screen and (max-height: 450px) {
+        .sidenav {
+            padding-top: 15px;
+        }
+
+        .sidenav a {
+            font-size: 18px;
+        }
+    }
+
+    li:hover {
+        background-color: red;
+    }
+</style>
+
+
+
+<div class="sidenav">
+    <ul class="list-unstyled ml-2">
+        <a href="/vendor" style="text-decoration: none;">
+            <li style="color:#A4A6B3 ;pointer-events: none;" class="mb-5">
+                <span style="text-transform: uppercase;"><img class="img-thumbnail rounded"
+                        src="/vendor-images/{{id}}.jpg" style="height: 80px;width: 80%;" />
+                    {{storename}}</span>
+
+            </li>
+        </a>
+    </ul>
+    <ul class="list-unstyled ml-2">
+        <a href="/vendor/orders">
+            <li>
+                <hr>
+                <i class="fas fa-shopping-bag " style="color: #A4A6B3;"> Orders</i>
+                <hr>
+            </li>
+        </a>
+        <a href="/vendor/order-history">
+            <li>
+                <hr>
+                <i class="fas fa-book" style="color: #A4A6B3;"> Order history</i>
+                <hr>
+            </li>
+        </a>
+        <a href="/vendor/products">
+            <li>
+                <hr>
+                <i class="fa fa-group" style="color: #A4A6B3;"> Products</i>
+                <hr>
+            </li>
+        </a>
+        <a href="/vendor/users">
+            <li>
+                <hr>
+                <i style="color: #A4A6B3;" class="fas fa-user-tie"> Users</i>
+                <hr>
+            </li>
+        </a>
+        <a href="/vendor/feedback">
+            <li>
+                <hr>
+                <i class="fas fa-book-reader" style="color: #A4A6B3;"> Feedback</i>
+                <hr>
+            </li>
+        </a>
+    </ul>
+    <ul class="list-unstyled ml-2">
+        <a href="/vendor/settings">
+            <li>
+                <hr>
+                <i class="fa fa-gear" style="color: #A4A6B3;">Settings</i>
+                <hr>
+            </li>
+        </a>
+    </ul>
+
+
+
+
+</div>

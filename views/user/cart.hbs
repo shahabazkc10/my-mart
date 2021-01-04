@@ -1,0 +1,140 @@
+<section>
+    <i class='fas fa-shopping-cart m-5' style="font-size: 25px;color:black">Cart</i>
+</section>
+<section id="fullCart">
+    <section class="ml-5">
+        <div class="mb-5">
+            <div id="contentcart" class="row d-flex">
+                {{#if products}}
+                <div class="col-md-12 col-lg-6 col-xl-6 col-12 ">
+                    {{#each products}}
+                    <div id="eachproduct{{this._id}}" class=" mb-2">
+                        <a onclick="removeItem('{{this._id}}','{{this.product._id}}','{{this.quantity}}')">
+                            <span class="float-right mr-4 mt-4">
+                                <button class="btn btn-dark" style='font-size:15px'>Remove <i
+                                        class='fas fa-trash-alt text-danger'></i>
+                                </button>
+                            </span>
+                        </a>
+                        <div class="row mt-2 mb-2">
+                            <div class="image mr-2">
+                                <a id="button{{this.product._id}}" onclick="loaddata('{{this.product._id}}')">
+                                    <img style="height: 100px;width: 100px;" class="rounded"
+                                        src="/product-images/{{this.product._id}}.jpg" alt="">
+                                </a>
+                            </div>
+                            <div class="col">
+                                <div class="second">
+                                    <span>
+                                        <b>{{this.product.name}} </b>
+                                    </span><br>
+                                    <span>
+                                        <b>Quantity</b>
+                                        <button onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{this.product.storeId}}',-1)" class="btn btn-dark mr-2 ml-1">-</button><span id="quantity{{this.product._id}}">{{this.quantity}}</span>
+                                        <button onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{this.product.storeId}}',1)" class="btn btn-dark ml-1">+</button>
+                                    </span><br>
+                                    <span class="mt-5">
+                                        <b>Price: ₹ {{this.product.price}} / per {{this.product.quantitytype}}</b>
+                                    </span><br>
+                                    <span><b>Seller: {{this.product.storename}}</b></span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                    {{/each}}
+                </div>
+                <div class="col-md-12 col-lg-6 col-xl-6 col-8">
+                    <h3>Cart details</h3>
+                    <div class="row">
+                        <div class="col-12 mb-2">
+                            <div class="pre container">
+                                <ul class="list-group mb-3 z-depth-1">
+                                    {{#each productValue}}
+                                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                        <div>
+                                            <span class="text-muted">{{this.productName}}</span>
+                                            <span class="text-muted">[{{this.productPrice}}X
+                                                {{this.quantity}}]</span>
+                                        </div>
+                                        <span class="text-muted">₹{{this.totalproduct}}</span>
+                                    </li>
+                                    {{/each}}
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span><strong>Total Items</strong></span>
+                                        <strong>{{productLength}}</strong>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between">
+                                        <span><strong>Total (INR)</strong></span>
+                                        <strong>₹{{totalValue}}</strong>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="sixth ml-3">
+                                <a href="/place-order"><button class="btn btn-success mb-2">Checkout</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {{else}}
+    <div class="container" align="center">
+        <h1>No products in cart</h1>
+    </div>
+
+    {{/if}}
+</section>
+<script>
+    function changeQuantity(cartId,proId,storeId,count){
+        let quantity = parseInt(document.getElementById('quantity'+proId).innerHTML)
+        count = parseInt(count)
+        $.ajax({
+            url:'/change-product-quantity',
+            data:{
+                cart:cartId,
+                product:proId,
+                store:storeId,
+                count:count,
+                quantity:quantity
+            },
+            method:'post',
+            success:(response)=>{
+                if(response.removeProduct){
+                    console.log("removeproduct")
+                   // document.getElementById('cartItemTotal').innerHTML = cartItemT;;
+                   // document.getElementById('cart-count').innerHTML = cartItemT;
+                    $('#fullCart').load('cart #fullCart')
+
+                }
+                else if(response.quantityChange){
+                    console.log("quantity change")
+                    document.getElementById('quantity'+proId).innerHTML = quantity + count
+                    $('#fullCart').load('cart #fullCart')
+                }
+            }
+        })
+    }
+</script>
+<script>
+    function removeItem(cartId, proId, quantity) {
+        $.ajax({
+            url: '/remove-item/' + proId,
+            data: {
+                cart: cartId,
+                quantity: quantity
+            },
+            method: 'post',
+            success: (response) => {
+                if (response.removeProduct) {
+                    $(document).ready(function () {
+                        $('#fullCart').load('cart #fullCart');
+                    });
+                }
+            }
+        })
+    }
+</script>

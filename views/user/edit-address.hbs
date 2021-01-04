@@ -1,0 +1,44 @@
+<section id="main-content">
+    <div class="container">
+        <h3>Address Manage</h3>
+        <div class="row">
+            <div class="col-6">
+                <form action="/edit-address/{{address._id}}" method="POST">
+                    <div class="jumbotron" style="background-color: thistle;">
+                        <div class="mt-4">
+                            <label for="">Name</label>
+                            <input style="text-align: left;" required value="{{address.address.name}}" type="text"
+                                name="name" class="form-control" placeholder="Full name">
+                            <label for="">Phone number</label>
+                            <input style="text-align: left;" required value="{{address.address.number}}" type="text"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                / maxlength="10" minlength="10" placeholder="Number" name="phonenumber"
+                                class="form-control">
+                            <input type="text" value="Kerala" hidden name="state" id="">
+                            <label for="">Town/City</label>
+                            <input style="text-align: left;" required value="{{address.address.town}}" name="town"
+                                type="text" class="form-control" placeholder="Town/city">
+                            <label for="">Pincode</label>
+                            <input style="text-align: left;" value="{{address.address.pincode}}" name="pincode"
+                                type="text" required class="form-control" maxlength="6" minlength="6"
+                                placeholder="Pincode"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                            <label for="">Address</label>
+                            <textarea style="text-align: left;" name="address" required id="address" cols="20"
+                                class="form-control" rows="5">{{address.address.address}}</textarea>
+                            {{#if primary}}
+                            <input type="checkbox" hidden checked name="type"><br>
+                            {{/if}}
+                            {{#if alternative}}
+                            <label for="">Make this address as default address</label>
+                            <input type="checkbox" name="type"><br>
+                            {{/if}}
+
+                            <button type="submit" class="btn btn-primary mt-3">Update address</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

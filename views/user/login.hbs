@@ -1,0 +1,84 @@
+<link rel="stylesheet" href="css/login.css" type="text/css">
+<div class="wrapper fadeInDown btn-success">
+  <h1>MY MART</h1>
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+
+    <div class="fadeIn first">
+
+      <p style="display: none;" id="errormessage" class="error text-danger">Invalid user details</p>
+
+      <p style="color: black;">User login<span class="glyphicon glyphicon-user"></span></p>
+    </div>
+
+    <!-- Login Form -->
+    <div id="loginform">
+      <form id="login" name="login" class="mb-2">
+
+        <input type="text" id="email" value="shahabazkc@gmail.com" class="fadeIn second form-control" name="email"
+          placeholder="Enter email">
+
+        <button id="submit_btn" class="btn btn-primary fadeIn fourth mb-2">Log In</button>
+      </form>
+      <!-- Remind Passowrd -->
+      <div id="formFooter">
+        <a class="underlineHover text-dark mr-5" href="/signup">Create an Account</a>
+        <a class="underlineHover text-dark" href="#">Forgot Password?</a>
+      </div>
+    </div>
+    <div id="otp" style="display: none;">
+      <form id="otpform" name="otp">
+        <p style="color: black;">We have sented otp to your registered phone number</p>
+        <input type="text" id="otpvalue" name="code" class="fadeIn second form-control"
+          placeholder="Enter the otp here...">
+        <input type="hidden" name="requestId" id="verificationid" class="fadeIn third form-control">
+        <input type="submit" id="verifyotpbtn" class="fadeIn fourth" value="verify otp">
+      </form>
+    </div>
+
+  </div>
+</div>
+<script>
+  $('#login').on("submit", function (e) {
+    e.preventDefault();
+    var data = $(this).serialize();
+    console.log(data)
+    $.ajax({
+      type: 'POST',
+      url: '/login',
+      data: data,
+      success: function (verificationidofotp) {
+        console.log("login successfull")
+        $('#loginform').hide()
+        $('#otp').show()
+        document.getElementById('verificationid').value = verificationidofotp.requestId;
+        $('#otpform').on('submit', function (e) {
+          e.preventDefault();
+          var dataval = $(this).serialize()
+          console.log(dataval)
+          $.ajax({
+            type: 'POST',
+            url: '/verify',
+            data: dataval,
+            success: function (id) {
+              console.log("login completely succesfull")
+              location.replace('/')
+            },
+            error: function () {
+              console.log("otp is incorrect")
+            }
+          })
+        })
+      },
+      error: function (status) {
+        console.log(status)
+        $('#errormessage').show()
+        console.log("login unsuccessfull")
+
+      }
+
+    })
+  })
+</script>

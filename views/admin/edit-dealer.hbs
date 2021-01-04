@@ -1,0 +1,48 @@
+
+<div class="container">
+    <h1>Edit dealer</h1>
+    <div class="section">
+        <form action="/admin/edit-dealer/{{this.dealer._id}}" method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-8">
+                    <label for="">User name</label>
+                    <input type="text" id="username" value="{{this.dealer.username}}" required name="username" class="form-control">
+                    <label for="">Address</label>
+                    <input type="text" id="address" value="{{this.dealer.address}}" required name="address" class="form-control">
+                    <label for="">Store name</label>
+                    <input type="text" id="store" value="{{this.dealer.storename}}" required name="storename" class="form-control">
+                    <label for="">Password</label>
+                    <input type="password" id="pass"   name="password"  class="form-control">
+                    <label for="">Extra info</label>
+                    <input type="text" id="extra" value="{{this.dealer.extrainfo}}"  name="extrainfo" class="form-control">
+                    <label for="">Phone number</label>
+                    <input type="number" value="{{this.dealer.phonenumber}}" id="number" required name="phonenumber" class="form-control">
+
+                </div>
+                <div class="col-4">
+                    <label for="">Profile photo</label><br>
+                    <img id="imageDisplay"  src="/vendor-images/{{this.dealer._id}}.jpg"  alt="" style="width: 105px;height: 105px;" class="rounded-circle mb-1"><br>
+                    <input type="button" onclick="profileClick()" value="Change photo" id="addPhoto" class="btn btn-primary">
+                    <input onchange="loadFile(event)" hidden name="Image" id="Image" type="file">
+                </div>
+                <button type="submit" class="btn btn-lg btn-primary ml-3 mt-2">Update dealer</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    var loadFile = function(event){
+        var image = document.getElementById('imageDisplay');
+        image.src = URL.createObjectURL(event.target.files[0]);
+        document.getElementById('imageDisplay').style.display="block";
+        document.getElementById('addPhoto').value="Change photo";
+        $('#profilebtn').hide()
+    }
+    function profileClick() {
+        $('#Image').click()
+
+    }
+
+
+
+</script>

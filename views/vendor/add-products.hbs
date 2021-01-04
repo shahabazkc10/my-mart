@@ -1,0 +1,143 @@
+<style>
+    .dot {
+        height: 105px;
+        width: 105px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+    }
+</style>
+<div id="container" class="container">
+    <h1>New Item</h1>
+    <p id="error"></p>
+    <div class="section">
+        <form id="form">
+            <div class="row">
+                <div class="col-8">
+                    <label for="">Product name</label>
+                    <input type="text" id="name" required name="name" class="form-control">
+                    <label for="">Category</label>
+                    <select name="category" id="category" class="form-control">
+                        {{#each categories}}
+                        <option value="{{this.name}}">{{this.name}}</option>
+                        {{/each}}
+                    </select>
+                    <label for="">Quantity type</label>
+                    <select name="quantitytype" id="quantity" class="form-control">                
+                        <option value="kilogram">Kilogram</option>
+                        <option value="pieces">Pieces</option>
+                    </select>
+                    <label for="">Price</label>
+                    <input type="number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="price" required name="price" class="form-control">
+                    <label for="">Stock</label>
+                    <input type="number" id="stock" required name="stock" class="form-control">
+                    <label for="">Product Description</label>
+                    <textarea name="description" class="form-control" id="description" cols="30" rows="8"></textarea>
+                    <input type="text" class="form-control" hidden value="{{response}}" name="vendor">
+                    <input type="text" hidden value="{{storename}}" name="storename">
+                    <input type="text" hidden value="{{storeId}}" name="storeId">
+                </div>
+                <div id="rightdiv" class="col-4">
+                    <label for="">Product photo</label><br>
+                    <div id="cropped_result"></div>
+                    <img id="imageDisplay" src="" alt="" style="width: 105px;height: 105px;display: none;"
+                        class="rounded-circle">
+                    <img id="loadimageDisplay" src="" name="Image" alt=""
+                        style="width: 105px;height: 105px;display:none" class="rounded-circle">
+                    <span id="productbtn" class="dot"></span><br>
+                    <input type="button" value="Crop" style="display: none;" id="crop_button"
+                        class="btn btn-primary mb-2">
+                    <input type="button" onclick="profileClick()" value="Add photo" id="addPhoto"
+                        class="btn btn-primary">
+                    <input onchange="loadFile(this)" required hidden id="image" type="file">
+                </div>
+
+
+                <button type="submit" class="btn btn-lg btn-primary ml-3 mt-2">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    #imageDisplay {
+        display: block;
+        max-width: 100%;
+        max-height: 200px;
+    }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.9/cropper.js"
+    integrity="sha512-oqBsjjSHWqkDx4UKoU+5IUZN2nW2qDp2GFSKw9+mcFm+ZywqfBKp79nfWmGPco2wzTWuE46XpjtCjZ9tFmI12g=="
+    crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.9/cropper.css"
+    integrity="sha512-949FvIQOibfhLTgmNws4F3DVlYz3FmCRRhJznR22hx76SKkcpZiVV5Kwo0iwK9L6BFuY+6mpdqB2+vDIGVuyHg=="
+    crossorigin="anonymous" />
+
+<script>
+    function profileClick() {
+        console.log("WORK")
+        $('#image').click()
+    }
+    function loadFile(input) {
+        const image = document.getElementById('imageDisplay')
+        image.src = URL.createObjectURL(event.target.files[0])
+        $('#productbtn').hide();
+        $('#addPhoto').hide()
+        $('#crop_button').show()
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#imageDisplay').attr('src', e.target.result)
+            }
+            reader.readAsDataURL(input.files[0])
+            setTimeout(initCropper, 1000)
+        }
+    }
+    function initCropper() {
+        let image = document.getElementById('imageDisplay');
+        var cropper = new Cropper(image, {
+            aspectRatio: 1 / 1,
+            crop: function (e) {
+                console.log(e.detail.x)
+                console.log(e.detail.y)
+            }
+        })
+        $('#crop_button').click('click', function () {
+            $('.cropper-container').hide()
+            $('#crop_button').hide()
+            document.getElementById('addPhoto').style.display = "block"
+            var imgurl = cropper.getCroppedCanvas().toDataURL();
+            var loadCrop = document.getElementById('loadimageDisplay')
+            $('#loadimageDisplay').show()
+            loadCrop.src = imgurl;
+            $('#cropped_result').show()
+            $('#addPhoto').hide()
+            $('#changePhoto').show()
+        })
+        $('#form').on('submit', function (e) {
+            e.preventDefault();
+            cropper.getCroppedCanvas().toBlob(function (blob) {
+                var form = $('#form')[0]
+                var formData = new FormData(form)
+                formData.append('croppedImage', blob)
+                console.log(formData)
+                $.ajax({
+                    url: '/vendor/add-products',
+                    method: 'POST',
+                    data: formData,
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                    contentType: false,
+                    success: function () {
+                        console.log("upload Success")
+                        location.replace('/vendor/products')
+                    },
+                    error: function () {
+                        document.getElementById('error').value = "Error not created"
+                        console.log("upload failed")
+                    }
+                })
+            })
+        })
+    }
+</script>

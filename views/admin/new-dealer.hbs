@@ -1,0 +1,57 @@
+<style>
+    .dot {
+        height: 105px;
+        width: 105px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+    }
+</style>
+<div class="container">
+    <h1>New dealer</h1>
+    <div class="section">
+        <form action="/admin/new-dealer" method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-8">
+                    <label for="">User name</label>
+                    <input type="text" id="username" required name="username" class="form-control">
+                    <label for="">Password</label>
+                    <input type="password" id="password" required name="password" class="form-control">
+                    <label for="">Address</label>
+                    <input type="text" id="address" required name="address" class="form-control">
+                    <label for="">Store name</label>
+                    <input type="text" id="store" required name="storename" class="form-control">
+                    <label for="">Extra info</label>
+                    <input type="text" id="extra" name="extrainfo" class="form-control">
+                    <label for="">Phone number</label>
+                    <input type="number" id="number" required name="phonenumber" class="form-control">
+
+                </div>
+                <div class="col-4">
+                    <label for="">Profile photo</label><br>
+                    <img id="imageDisplay"  src=""  alt="" style="width: 105px;height: 105px;display: none;" class="rounded-circle">
+                    <span id="profilebtn" class="dot"></span><br>
+                    <input type="button" onclick="profileClick()" value="Add photo" id="addPhoto" class="btn btn-primary">
+                    <input onchange="loadFile(event)" required hidden name="Image" id="Image" type="file">
+                </div>
+                <button type="submit" class="btn btn-lg btn-primary ml-3 mt-2">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    var loadFile = function(event){
+        var image = document.getElementById('imageDisplay');
+        image.src = URL.createObjectURL(event.target.files[0]);
+        document.getElementById('imageDisplay').style.display="block";
+        document.getElementById('addPhoto').value="Change photo";
+        $('#profilebtn').hide()
+    }
+    function profileClick() {
+        $('#Image').click()
+
+    }
+
+
+
+</script>

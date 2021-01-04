@@ -1,0 +1,103 @@
+a {
+    color: black;
+    text-decoration: none;
+}
+
+a:hover {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.input-icons i {
+    position: absolute;
+}
+
+.input-icons {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.icon {
+    padding: 10px;
+    min-width: 40px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    justify-content: center;
+    align-items: center;
+}
+
+
+.container .card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #e6f4f4;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+
+.content-1 .arrow-left {
+    position: relative;
+    left: 3%;
+    color: red;
+    font-size: 20px;
+    cursor: pointer;
+}
+.no-outline:focus {
+    outline: none;
+}
+
+input {
+    border: hidden;
+
+    text-align: center;
+}
+
+.input-icons i {
+    position: fixed;
+    margin-top: 5px;
+}
+
+.input-icons {
+    width: 100%;
+
+}
+
+.icon {
+    padding: 0px;
+    min-width: 40px;
+}
+
+.input-field {
+    width: 100%;
+
+    text-align: center;
+}
+.navbar.affix-top,
+.navbar.affix-bottom {
+    position: static;
+}
+
+.navbar.affix {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1;
+    background: #fff;
+    transition: all .35s ease;
+}

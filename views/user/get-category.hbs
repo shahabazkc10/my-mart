@@ -1,0 +1,33 @@
+<div class="container mt-5">
+
+
+</div>
+<section>
+    <center>
+        <h3>Select your preferred Category</h3>
+    </center>
+    <div class="container">
+        <div class="row">
+            {{#each categories}}
+            <div class="col-lg-3 col-md-4 col-6">
+                <a href="{{this._id}}" style="text-decoration: none;">
+                    <div class="card" style="height: 19rem;border: hidden">
+                        <img class="card-img-top" style="height: 50%;" src="/category-images/{{this._id}}.jpg"
+                            alt="Card image cap">
+                        <div class="card-body">
+                            <p class="card-title"><b>{{this.name}}</b></p>
+                            <p class="card-text">{{this.description}}</p>
+                        </div>
+                        <hr style="border: 1px solid;">
+                    </div>
+                </a>
+            </div>
+            {{/each}}
+        </div>
+
+</section>
+
+<link rel="stylesheet" href="/css/user/user.css" type="text/css">
+<script>
+
+</script>

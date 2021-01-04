@@ -1,0 +1,79 @@
+<div class="main">
+    <div class="navbar justify-content-end">
+        <div class="navbar-item">
+            <a class="btn btn-primary">{{response}}</a>
+            <a href="/vendor/logout" class="btn btn-danger">Logout</a>
+        </div>
+    </div>
+</div>
+<div class="main">
+    <div class="m-5">
+        <section>
+            <div>
+                <h4> <i class="fa fa-group">Products</i></h4>
+                <div class="float-right"><a href="/vendor/add-products" class="btn btn-primary">Add Product</a></div>
+            </div>
+        </section>
+        <section>
+            <div class="table table-responsive">
+                <table style="width: 100%;">
+                    <thead>
+                        <tr style="color: grey;">
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                            <th>Description</th>
+                            <th>Left</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each products}}
+                        <tZr>
+                            <td><img src="/product-images/{{this._id}}.jpg" style="height: 100px;width: 100px;" alt="">
+                            </td>
+                            <td>{{this.name}}</td>
+                            <td>{{this.category}}</td>
+                            <td>{{this.price}}</td>
+                            <td>{{this.stock}}</td>
+                            <td>{{this.description}}</td>
+                            {{#if this.left}}
+                            <td>{{this.left}}</td>
+                            {{else}}
+                            <td>{{this.stock}}</td>
+                            {{/if}}
+                            <td>
+                                <a href="/vendor/disable-product/{{this._id}}"
+                                    class="btn btn-dark text-light mb-1">Disable</a>
+                                <a href="/vendor/edit-product/{{this._id}}" class="btn btn-success mb-1">Edit</a>
+                                <a href="/vendor/stock/{{this._id}}" class="btn btn-primary mb-1">Stock</a>
+                                <a href="/vendor/delete-product/{{this._id}}"
+                                    onclick="return confirm('Are you sure you need to deleted this {{this.name}} product from listing ?')"
+                                    class="btn btn-danger mb-1">Delete</a>
+                            </td>
+                        </tr>
+                        {{/each}}
+                        {{#each disableProduct}}
+                        <tr>
+                            <td><img src="/product-images/{{this._id}}.jpg" style="height: 100px;width: 100px;" alt="">
+                            </td>
+                            <td>{{this.name}}</td>
+                            <td>{{this.category}}</td>
+                            <td>{{this.price}}</td>
+                            <td>{{this.stock}}</td>
+                            <td>{{this.description}}</td>
+                            <td>{{this.left}}</td>
+                            <td>
+                                <a href="/vendor/enable/{{this._id}}" class="btn btn-dark text-light mb-1">Enable</a>
+                                <a href="/vendor/delete-disable-product/{{this._id}}" onclick="return confirm('Are you sure you need to deleted this {{this.name}} product from listing ?')" class="btn btn-danger mb-1">Delete</a>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+</div>

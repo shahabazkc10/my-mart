@@ -1,0 +1,163 @@
+<center>
+    <div class="col-lg-3 col-md-6 col-8">
+        <div class="input-icons" style="border: 2px solid black;">
+            <i class="fa fa-search ml-2" style="font-size:32px"></i>
+            <input type="text" value="Search" class="input-field" name="" id="">
+        </div>
+    </div>
+</center>
+<section>
+    <div class="container">
+        <div class="row">
+            {{#if product}}
+            <div class="container">
+                <center>
+                    <h3>Products of {{this.product.[0].storename}}</h3>
+                </center>
+            </div>
+            {{#each product}}
+
+            <div class="col-lg-3 col-md-4 col-6 mb-2" data-toggle="modal" class="{{this.storename}}"
+                data-target="#a{{this._id}}">
+
+                <div style="height: 300px;">
+                    <div class="card" style="">
+                        <img class="card-img-top" style="height:8rem" src="/product-images/{{this._id}}.jpg"
+                            alt="Card image cap">
+                        <div class="card-body" style="font-size: 12px;">
+                            <h5 class="card-title">{{this.name}}</h5>
+                            <p class="card-text">{{this.description}}</p>
+                            <p class="card-text">₹ {{this.price}}<a
+                                    onclick="addToCart('{{this._id}}','{{../categoryId}}','{{this.storeId}}')"
+                                    class="btn btn-success float-right"><b>+</b></a>
+                            </p>
+                            <p class="card-text" style="font-size: 12px;">Selled by: {{this.storename}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade top" id="a{{this._id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                aria-hidden="true" data-backdrop="true">
+                <div class="modal-dialog modal-frame modal-top modal-notify modal-info" role="document">
+                    <!--Content-->
+                    <div class="modal-content m-0">
+                        <!--Body-->
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <div class="card" style="height: 100%;">
+                                <div class="content-1">
+                                    <span class="arrow-left">
+                                        <a onclick="closemodal('a{{this._id}}')"><i class="fas fa-arrow-left"
+                                                aria-hidden="true"> </i></a>
+                                    </span>
+                                    <div class="main-image" align="center">
+                                        <img id="mainimage" style="height: 200px;" class="mt-2 mb-2"
+                                            src="/product-images/{{this._id}}.jpg">
+                                    </div>
+                                    <hr>
+                                </div>
+                                <div class="content-3 ml-3 mr-3 mb-1">
+                                    <div class="branding">
+                                        <h3>{{this.name}}</h3>
+                                    </div>
+                                    <span style="font-size: 21px;">Price: ₹</span>
+                                    <span style="font-size: 21px;">{{this.price}}</span>
+                                    <div class="ratings mt-2 mb-4">
+                                        <span><b>Product rating: </b></span>
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star"></i></span>
+                                        <span><i class="fas fa-star"></i></span>
+                                    </div>
+                                    <div class="qunatity mb-2">
+                                        <span><b>Quantity: </b><button class="btn btn-primary  text-center"
+                                                style="width: 40px;font-size: 20px;height:50px"><b>-</b></button> 1 KG
+                                            <button class="btn btn-primary text-center"
+                                                style="width: 40px;font-size: 20px;height:50px"><b>+</b></button></span>
+                                    </div>
+                                    <div class="paragraph">
+                                        <p><b>Description: {{this.description}}</b>
+                                        </p>
+                                    </div>
+                                    <div class="price">
+                                        <p><span><b>Store: {{this.storename}}</b></span></p>
+                                        <p><span><b>Selled by: {{this.vendor}}</b></span></p>
+                                        <div class="space"></div>
+                                        <button
+                                            onclick="addToCart('{{this._id}}','{{../categoryId}}','{{this.storeId}}')"
+                                            class="btn btn-primary form-control">Add to cart</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+            {{else}}
+            <div class="container">
+                <div class="jumbotron">
+                    <center>
+                        <h3>No products available from this seller</h3>
+                    </center>
+                </div>
+
+            </div>
+
+            {{/if}}
+        </div>
+    </div>
+</section>
+<div id="id01" class="modal mr-5 ml-3">
+    <span onclick="document.getElementById('id01').style.display='none'" class="close"
+        title="Close Modal">&times;</span>
+    <div class="container">
+        <div style="margin-top: 10%;height: 550px;" class="modal-content">
+            <center style="margin-bottom: 5%;">
+                <h1 style="color: green;">MY MART</h1>
+            </center>
+            <li class="ml-3 mb-4"><b>Your cart contain other seller products.</b></li>
+            <li class="ml-3 mb-4"><b>A cart can only contain products from a seller.</b></li>
+            <li class="ml-3 mb-4"><b>Please delete the other seller items to add this product to the cart or click
+                    cancel
+                    to keep the old
+                    cart products</b></li>
+            <center>
+                <h1 style="margin-top: 5%;">Delete other sellers products from cart ?</h1>
+                <div class="clearfix">
+                    <button type="button" id="cancelclick" class="cancelbtn btn btn-info mr-3 btn-lg">Cancel</button>
+                    <button type="button" id="deleteclick" class="deletebtn btn btn-danger ml-3 btn-lg">Delete</button>
+                </div>
+            </center>
+        </div>
+
+
+    </div>
+    <br><br><br>
+</div>
+<script>
+    // Get the modal
+    var modal = document.getElementById('id01');
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+<link rel="stylesheet" href="/css/user/view-products.css" type="text/css">
+<script src="/javascripts/user/view-products.js"></script>
+<script>
+    function filterSelection(id) {
+        console.log(id)
+        console.log("clicked")
+    }
+    function check(value) {
+        console.log("selected ")
+        console.log(value)
+        document.querySelectorAll('margin').forEach(function (el) {
+            el.style.display = 'none';
+        });
+    }
+</script>

@@ -1,0 +1,167 @@
+<div class="container mt-5">
+    <div class="w3-content w3-section" style="height: 300px;">
+        <img class="mySlides"
+            src="https://st2.depositphotos.com/7341970/11081/v/950/depositphotos_110818802-stock-illustration-grocery-shopping-discount-banner.jpg"
+            style="width:100%;height: 300px;">
+        <img class="mySlides"
+            src="https://st3.depositphotos.com/7341970/33687/v/1600/depositphotos_336878918-stock-illustration-grocery-shopping-promotional-sale-banner.jpg"
+            style="width:100%;height: 300px;">
+        <img class="mySlides"
+            src="https://st4.depositphotos.com/3212945/30348/v/1600/depositphotos_303481256-stock-illustration-watermelon-juice-production-steps-watermelon.jpg"
+            style="width:100%;height: 300px;">
+    </div>
+    <center>
+        <div>
+            <h2 align="center"
+                style="font-size: 44px;font-style: normal;line-height: 56px;letter-spacing: 0.2px;font-family: Arial, Helvetica, sans-serif;">
+                <b>Order from your nearest<br>Supermarket</b>
+            </h2>
+        </div>
+        <div>
+            <p style="color: grey;font-family: Arial, Helvetica, sans-serif;">
+                <b>My Mart is a new startup established on January 2021 <br>We have partnered with more than thousands
+                    of sellers from Kerala <br></b>
+            </p>
+        </div>
+        <div class="col-lg-3 col-md-6 col-8 mb-4 mt-4">
+            <div class="input-icons" style="border: 2px solid black;">
+                <i class="fa fa-map-marker-alt mt-2 ml-2" style="font-size:25px"></i>
+                <input type="text" value="Kuthuparamba" class="input-field" name="" id="">
+            </div>
+        </div>
+    </center>
+
+
+</div>
+<style>
+    .w3-content {
+        position: relative;
+        margin-top: 0em;
+    }
+
+    .w3-btn,
+    .w3-button {
+        border: none;
+        display: inline-block;
+        outline: 0;
+        padding: 8px 16px;
+        vertical-align: middle;
+        overflow: hidden;
+        text-decoration: none;
+        color: inherit;
+        background-color: inherit;
+        text-align: center;
+        cursor: pointer;
+        white-space: nowrap
+    }
+
+    .w3-btn,
+    .w3-button {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none
+    }
+
+    .w3-disabled,
+    .w3-btn:disabled,
+    .w3-button:disabled {
+        cursor: not-allowed;
+        opacity: 0.3
+    }
+
+    .w3-disabled *,
+    :disabled * {
+        pointer-events: none
+    }
+
+    .w3-bar-block .w3-dropdown-hover .w3-button,
+    .w3-bar-block .w3-dropdown-click .w3-button {
+        width: 100%;
+        text-align: left;
+        padding: 8px 16px
+    }
+
+    .w3-button:hover {
+        color: #000 !important;
+        background-color: #ccc !important
+    }
+
+    .w3-content button {
+        position: absolute;
+        top: 32%;
+    }
+
+    .w3-display-right {
+        right: 0
+    }
+
+    .w3-display-left {
+        left: 0
+    }
+</style>
+<script>
+    var myIndex = 0;
+    carousel();
+
+    function carousel() {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        myIndex++;
+        if (myIndex > x.length) { myIndex = 1 }
+        x[myIndex - 1].style.display = "block";
+        setTimeout(carousel, 2000); // Change image every 2 seconds
+    }
+</script>
+<section>
+    {{#if vendors}}
+    <center>
+        <h3>Select your preferred Store</h3>
+    </center>
+    <div class="container">
+        <div class="row">
+            {{#each vendors}}
+            <div class="col-lg-3 col-md-4 col-6">
+                <a href="/view/{{this._id}}/a" style="text-decoration: none;">
+                    <div class="card" style="height: 19rem;border: hidden">
+                        <img class="card-img-top" style="height: 50%;" src="/vendor-images/{{this._id}}.jpg"
+                            alt="Card image cap">
+                        <div class="card-body">
+                            <p class="card-title"><b>{{this.storename}}</b></p>
+
+                            <p class="card-text">{{this.address}}</p>
+
+                            <p class="card-text" hidden id="status{{this._id}}">{{this.status}}</p>
+                            <p class="card-text text-primary" id="current{{this._id}}"></p>
+                        </div>
+                        <script>
+                            status = document.getElementById('status{{ this._id }}').innerText;
+                            if (status = true) {
+                                document.getElementById('current{{this._id}}').innerText = 'Opened now'
+                            }
+                            else {
+                                document.getElementById('current{{this._id}}').innerText = 'Closed now'
+                            }
+                        </script>
+                        <hr style="border: 1px solid;">
+                    </div>
+                </a>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    {{else}}
+    <center>
+        <h3>No vendors available now</h3>
+    </center>
+    {{/if}}
+
+
+</section>
+
+<link rel="stylesheet" href="/css/user/user.css" type="text/css">

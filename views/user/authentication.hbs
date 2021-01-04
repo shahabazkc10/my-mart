@@ -1,0 +1,27 @@
+<link rel="stylesheet" href="css/login.css" type="text/css">
+<div class="wrapper fadeInDown btn-success">
+  <h1>MY MART</h1>
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+
+    <div class="fadeIn first">
+      {{#if loginErr}}
+      <p class="error text-danger">Invalid user details</p>
+      {{/if}}
+      <p>User login<span class="glyphicon glyphicon-user"></span></p>
+    </div>
+
+    <!-- Login Form -->
+<form action="/verify" method="POST">
+<label for="" style="color: black;font-size: 12px;">Please enter the 4 digit otp sented to our registered phone number</label>
+<input name="code" placeholder="Enter the otp">
+<input type="hidden" value="{{requestId}}"  name="requestId" id="">
+<button id="form-button-submit" class="btn btn-primary fadeIn fourth">verify</button>
+</form> 
+    <!-- Remind Passowrd -->
+
+
+  </div>
+</div>

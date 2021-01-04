@@ -1,0 +1,159 @@
+<section id="main-content">
+    <div class="container">
+        <h3>Address Manage</h3>
+        {{#if primaryAddress}}
+        <a id="addnewaddressbtn" class="btn btn-primary mb-2">+ Add New Address</a>
+        {{/if}}
+        <div class="row">
+            {{#if primaryAddress}}
+
+            <div class="col-6">
+                <div class="jumbotron" style="background-color: thistle;">
+                    <h4 class="text-primary">Default Address</h4>
+                    <div class="float-right">
+                        <a href="/edit-address/{{primaryAddress._id}}"><button id="editaddress" class="btn btn-primary mb-2">Edit
+                                Address</button></a>
+                    </div>
+                    <div class="mt-4">
+                        <label for="">Name</label>
+                        <input style="text-align: left;" value="{{primaryAddress.address.name}}" type="text" disabled
+                            class="form-control" placeholder="Full name">
+                        <label for="">Phone number</label>
+                        <input style="text-align: left;" value="{{primaryAddress.address.number}}" disabled type="text"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" /
+                            maxlength="10" minlength="10" placeholder="Number" class="form-control">
+                        <label for="">State</label>
+                        <input style="text-align: left;" disabled type="text" class="form-control" value="Kerala"
+                            disabled>
+                        <label for="">Town/City</label>
+                        <input style="text-align: left;" value="{{primaryAddress.address.town}}" disabled type="text"
+                            class="form-control" placeholder="Town/city">
+                        <label for="">Pincode</label>
+                        <input style="text-align: left;" value="{{primaryAddress.address.pincode}}" disabled type="text" required
+                            class="form-control" maxlength="6" minlength="6" placeholder="Pincode"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                        <label for="">Address</label>
+                        <textarea style="text-align: left;" disabled id="" cols="20" class="form-control"
+                            rows="5">{{primaryAddress.address.address}}</textarea>
+                    </div>
+                </div>
+            </div>
+                {{else}}
+                <div class="col-12">
+                    <h5 class="text-dark">+ New address</h5>
+                    <div class="jumbotron" style="background-color: thistle;width: 60%" ;>
+                        <form action="/new-address" method="POST" id="newaddressform" name="newaddress">
+                            <label for="">Name</label>
+                            <input style="text-align: left;" type="text" name="name" class="form-control"
+                                placeholder="Full name">
+                            <label for="">Phone number</label>
+                            <input style="text-align: left;" type="text" name="number"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                                / maxlength="10" minlength="10" placeholder="Number" class="form-control">
+                            <label for="">State</label>
+                            <input style="text-align: left;" type="text" class="form-control" value="Kerala" disabled>
+                            <input style="text-align: left;" type="text" class="form-control" value="Kerala" hidden
+                                name="state" id="">
+                            <label for="">Town/City</label>
+                            <input style="text-align: left;" type="text" name="town" class="form-control"
+                                placeholder="Town/city">
+                            <label for="">Pincode</label>
+                            <input style="text-align: left;" type="text" required class="form-control" maxlength="6"
+                                minlength="6" name="pincode" placeholder="Pincode"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                            <label for="">Address</label>
+                            <textarea style="text-align: left;" name="address" id="" cols="20" class="form-control"
+                                rows="5"></textarea>
+                            <input type="checkbox" checked hidden name="type">
+                            <button type="submit" id="newaddressformbtn" class="btn btn-success mt-2">Submit
+                                Address</button>
+                        </form>
+                    </div>
+                </div>
+                {{/if}}
+
+            {{#each alternativeAddress}}
+            <div class="col-6">
+                <div class="jumbotron" style="background-color: thistle;">
+                    <h4 class="text-primary">Alternative Address</h4>
+                    <div class="float-right">
+                        <a href="/delete-address/{{this._id}}"><button id="deleteaddress"
+                                class="btn btn-danger mb-2">Delete Address</button></a>
+                        <a href="/edit-address/{{this._id}}"><button id="editaddress" class="btn btn-primary mb-2">Edit
+                                Address</button></a>
+                    </div>
+                    <div class="mt-4">
+                        <label for="">Name</label>
+                        <input style="text-align: left;" value="{{this.address.name}}" type="text" disabled
+                            class="form-control" placeholder="Full name">
+                        <label for="">Phone number</label>
+                        <input style="text-align: left;" value="{{this.address.number}}" disabled type="text"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" /
+                            maxlength="10" minlength="10" placeholder="Number" class="form-control">
+                        <label for="">State</label>
+                        <input style="text-align: left;" disabled type="text" class="form-control" value="Kerala"
+                            disabled>
+                        <label for="">Town/City</label>
+                        <input style="text-align: left;" value="{{this.address.town}}" disabled type="text"
+                            class="form-control" placeholder="Town/city">
+                        <label for="">Pincode</label>
+                        <input style="text-align: left;" value="{{this.address.pincode}}" disabled type="text" required
+                            class="form-control" maxlength="6" minlength="6" placeholder="Pincode"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                        <label for="">Address</label>
+                        <textarea style="text-align: left;" disabled id="" cols="20" class="form-control "
+                            rows="5">{{this.address.address}}</textarea>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</section>
+<div class="container">
+    <div id="newForm" style="display: none;">
+
+        <div class="jumbotron" id="newaddressform" style="background-color: thistle;width: 60%" ;>
+            <div class="float-right">
+                <a id="cancelformbtn" class="btn btn-primary">Cancel</a>
+            </div>
+            <h3>New address</h3>
+            <form action="/new-address" method="POST" id="newextraaddress" name="newextraaddress">
+                <label for="">Name</label>
+                <input type="text" style="text-align: left;" name="name" class="form-control" placeholder="Full name">
+                <label for="">Phone number</label>
+                <input type="text" style="text-align: left;" name="number"
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" /
+                    maxlength="10" minlength="10" placeholder="Number" class="form-control">
+                <label for="">State</label>
+                <input type="text" style="text-align: left;" class="form-control" value="Kerala" disabled>
+                <input type="text" style="text-align: left;" name="state" hidden class="form-cotnrol" value="Kerala">
+                <label for="">Town/City</label>
+                <input type="text" style="text-align: left;" name="town" class="form-control" placeholder="Town/city">
+                <label for="">Pincode</label>
+                <input type="text" style="text-align: left;" required class="form-control" maxlength="6" minlength="6"
+                    name="pincode" placeholder="Pincode"
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                <label for="">Address</label>
+                <textarea name="address" style="text-align: left;" id="" cols="20" class="form-control"
+                    rows="5"></textarea>
+                <label for="">Make this address as default address</label>
+                <input type="checkbox" name="type"><br>
+                <button type="submit" id="newextraaddressbtn" class="btn btn-success mt-2">Submit Address</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+<script>
+    $('#addnewaddressbtn').click(function () {
+        document.getElementById('newForm').style.display = "block";
+        $('#main-content').hide()
+    })
+</script>
+<script>
+    $('#cancelformbtn').click(function () {
+        document.getElementById('newForm').style.display = "none";
+        $('#main-content').show()
+    })
+</script>

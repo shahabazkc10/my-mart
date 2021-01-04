@@ -1,0 +1,46 @@
+
+<div class="container">
+    <h1>Edit User</h1>
+    <div class="section">
+        <form action="/admin/edit-user/{{this.userdata._id}}" method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-8">
+                    <label for="">User name</label>
+                    <input type="text" id="username" value="{{this.userdata.username}}" required name="username" class="form-control">
+                    <label for="">Address</label>
+                    <input type="text" id="address" value="{{this.userdata.address}}" required name="address" class="form-control">
+                    <label for="">Email</label>
+                    <input type="email" id="email" value="{{this.userdata.email}}" required name="email" class="form-control">
+                    <label for="">Phone number</label>
+                    <input type="number" value="{{this.userdata.phonenumber}}" id="number" required name="phonenumber" class="form-control">
+                    <label for="">Password</label>
+                    <input type="password" value="" name="password" class="form-control">
+
+                </div>
+                <div class="col-4">
+                    <label for="">Profile photo</label><br>
+                    <img id="imageDisplay"  src="/user-images/{{this.userdata._id}}.jpg"  alt="" style="width: 105px;height: 105px;" class="rounded-circle mb-1"><br>
+                    <input type="button" onclick="profileClick()" value="Change photo" id="addPhoto" class="btn btn-primary">
+                    <input onchange="loadFile(event)" hidden name="Image" id="Image" type="file">
+                </div>
+                <button type="submit" class="btn btn-lg btn-primary ml-3 mt-2">Update User</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    var loadFile = function(event){
+        var image = document.getElementById('imageDisplay');
+        image.src = URL.createObjectURL(event.target.files[0]);
+        document.getElementById('imageDisplay').style.display="block";
+        document.getElementById('addPhoto').value="Change photo";
+        $('#profilebtn').hide()
+    }
+    function profileClick() {
+        $('#Image').click()
+
+    }
+
+
+
+</script>

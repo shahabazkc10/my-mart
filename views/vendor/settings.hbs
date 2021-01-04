@@ -1,0 +1,74 @@
+<div class="main">
+    <div class="navbar justify-content-end">
+        <div class="navbar-item">
+            <a class="btn btn-primary">{{response}}</a>
+            <a href="/vendor/logout" class="btn btn-danger">Logout</a>
+        </div>
+    </div>
+</div>
+<div class="main">
+    <div class="section m-4">
+        <div class="icon">
+            <h3><i class="fa fa-gear">Settings</i></h3>
+        </div>
+        {{#if status}}
+        <center>Store live</center>
+        {{else}}
+        <center>Store closed</center>
+        {{/if}}
+        <section>
+            <form action="/vendor/time/{{id}}" method="POST">
+                {{#if vendorD.opentime}}
+                Open time<input type="time" value="{{vendorD.opentime}}" name="opentime" class="mb-1 ml-1"><br>
+                Close time<input type="time" value="{{vendorD.closetime}}" name="closetime" class="ml-1">
+                <button type="submit" class="btn btn-primary">Update</button>
+                {{else}}
+                Open time<input type="time" name="opentime" class="mb-1 ml-1"><br>
+                Close time<input type="time" name="closetime" class="ml-1">
+                <button type="submit" class="btn btn-primary">Update</button>
+                {{/if}}
+            </form>
+        </section>
+        <div class="section">
+            <div class="mt-3">
+                <h4 class="ml-2">Banned users</h4>
+            </div>
+
+            <div class="table table-responsive">
+                <table style="width: 100%;">
+                    <div class="row col-12">
+                        <thead>
+                            <div class="col-12">
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Phone</th>
+                                    <th>Action</th>
+                                </tr>
+                            </div>
+                        </thead>
+                    </div>
+                    <div class="row">
+
+                        <tbody>
+                            <div class="col-12">
+                                {{#each banData}}
+                                <tr>
+                                    <td>{{this.username}}</td>
+                                    <td>{{this.phonenumber}}</td>
+                                    <td>
+                                        <a href="/vendor/unban-user/{{this._id}}" class="btn btn-success mb-1">Un
+                                            ban</a>
+                                    </td>
+
+                                </tr>
+                                {{/each}}
+
+                            </div>
+                        </tbody>
+
+                    </div>
+
+                </table>
+            </div>
+        </div>
+    </div>

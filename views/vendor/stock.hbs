@@ -1,0 +1,22 @@
+<div class="container">
+    <h1>Stock Update</h1>
+    <div class="section">
+        <form action="/vendor/stock/{{this.product._id}}" method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-8">
+                    <label for="">Product name</label>
+                    <input type="text" id="name" value="{{this.product.name}}" disabled required name="name" class="form-control">
+                    <label for="">Total</label>
+                    <input type="number" id="stock" value="{{this.product.stock}}" required name="stock" class="form-control">
+                    <label for="">Left</label>
+                    <input type="number" value="{{this.product.left}}" name="left" required class="form-control">
+                </div>
+                <div class="col-4">
+                    <label for="">Product photo</label><br>
+                    <img id="imageDisplay"  src="/product-images/{{this.product._id}}.jpg"  alt="" style="width: 105px;height: 105px;" class="rounded-circle"><br>
+                </div>
+                <button type="submit" class="btn btn-lg btn-primary ml-3 mt-2">Update Product stock</button>
+            </div>
+        </form>
+    </div>
+</div>
