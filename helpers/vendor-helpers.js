@@ -158,7 +158,7 @@ module.exports = {
         })
     },
     getStatus: (vendorId) => {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             var date = new Date();
             var hours = date.getHours();
             var minutes = date.getMinutes();
@@ -193,9 +193,9 @@ module.exports = {
                         }
                     })
             }
-            
-            })
             resolve(vendor)
+            })
+            
         })
            // currentTime(time)
             // var hours = time.substring(0, 2);
