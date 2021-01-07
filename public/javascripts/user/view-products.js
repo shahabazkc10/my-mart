@@ -29,7 +29,7 @@ function addToCart(proId, catID, storeId) {
                     success: (response) => {
                         if (response.status) {
                             console.log("success")
-                            location.replace('/view-products/' + catID)
+                            location.reload();
                         }
                         else {
                             location.replace('/tempo-login')
@@ -44,7 +44,7 @@ function addToCart(proId, catID, storeId) {
                 $('#cancelclick').click(function () {
                     $('#a' + proId).modal('hide')
                     document.getElementById('id01').style.display = 'none';
-                    location.replace('/view-products/' + catID)
+                    location.reload();
                 })
                 $('#deleteclick').click(function () {
                     let newData = { proId: proId, storeId: storeId }
@@ -54,7 +54,7 @@ function addToCart(proId, catID, storeId) {
                         data: newData,
                         success: () => {
                             console.log("deleted other cart products")
-                            location.replace('/view-products/' + catID)
+                            location.reload();
 
                         },
                         error: () => {
@@ -72,7 +72,7 @@ function addToCart(proId, catID, storeId) {
                     success: (response) => {
                         if (response.status) {
                             console.log("success")
-                            location.replace('/view-products/' + catID)
+                            location.reload();
                         }
                         else {
                             location.replace('/tempo-login')
