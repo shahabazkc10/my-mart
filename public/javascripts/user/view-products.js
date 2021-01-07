@@ -32,7 +32,7 @@ function addToCart(proId, catID, storeId) {
                             location.reload();
                         }
                         else {
-                            location.replace('/tempo-login')
+                            location.reload();
                             console.log("error")
                         }
                     }
