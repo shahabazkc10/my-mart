@@ -18,7 +18,6 @@ module.exports = {
             if (userEmail) {
                 response.user = userEmail;
                 response.status = true;
-                console.log("login success");
                 response.user = userEmail;
                 response.status = true;
                 resolve(response)
@@ -47,10 +46,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             let category = await db.get().collection(collection.CATEGORY_COLLECTION).findOne({ _id: ObjectID(catId) })
             category = category.name;
-            console.log(category);
             let products = await db.get().collection(collection.PRODUCTS_COLLECTION).find({storeId:vendorId, category: category,productStatus:true }).toArray()
-            console.log("products");
-            console.log(products);
             resolve(products)
         })
     },
@@ -91,13 +87,8 @@ module.exports = {
             }
             let userCart = await db.get().collection(collection.CART_COLLECTION).findOne({ user: ObjectID(userId), store: ObjectID(storeId) })
             if (userCart) {
-                console.log(userCart);
-                console.log("inside user cart and vendor cart");
                 let productExist = await userCart.products.findIndex(product => product.item == proId)
-                console.log(productExist);
                 if (productExist != -1) {
-
-                    console.log("product Exist");
                     db.get().collection(collection.CART_COLLECTION)
                         .updateOne({ user: ObjectID(userId), 'products.item': ObjectID(proId) },
                             {
@@ -127,7 +118,6 @@ module.exports = {
                         })
                 }
                 else {
-                    console.log("else product Exist");
                     db.get().collection(collection.CART_COLLECTION).updateOne({ user: ObjectID(userId), store: ObjectID(storeId) },
                         {
                             $push: { products: proObj }
@@ -138,7 +128,6 @@ module.exports = {
                 }
             }
             else {
-                console.log("mian exist");
                 let cartObj = {
                     store: ObjectID(storeId),
                     user: ObjectID(userId),
@@ -179,9 +168,6 @@ module.exports = {
                     }
                 }
             ]).toArray()
-            console.log('cart items');
-            console.log(cartItems);
-            console.log("end cart items");
             resolve(cartItems)
         })
     },
@@ -203,32 +189,25 @@ module.exports = {
         })
     },
     getStatusCart: (userId, storeId) => {
-        console.log(userId);
-        console.log(storeId);
         return new Promise(async (resolve, reject) => {
             let store = await db.get().collection(collection.CART_COLLECTION).findOne({ user: ObjectID(userId), store: ObjectID(storeId) })
             let otherStores = await db.get().collection(collection.CART_COLLECTION).find({ user: ObjectID(userId) }).toArray()
-            console.log(otherStores.length);
             if (otherStores.length > 1 && store) {
-                console.log("same store and other store found");
                 let otherStoresFound = true;
                 let sameStoreFound = true;
                 resolve({ sameStoreFound, otherStoresFound: otherStoresFound, store: store })
             }
             else if (otherStores.length > 0 && store) {
-                console.log("same store only found");
                 let otherStoresFound = false;
                 let sameStoreFound = true;
                 resolve({ sameStoreFound, otherStoresFound: otherStoresFound, store: store })
             }
             else if (otherStores.length > 0) {
-                console.log("other store only found");
                 let otherStoresFound = true;
                 let sameStoreFound = false;
                 resolve({ sameStoreFound, otherStoresFound: otherStoresFound, store: store })
             }
             else {
-                console.log("no store found");
                 let otherStoresFound = false;
                 let sameStoreFound = false;
                 resolve({ sameStoreFound, otherStoresFound: otherStoresFound, store: store })
@@ -350,7 +329,6 @@ module.exports = {
                             })
                     }
                     else {
-                        console.log("else checkbox");
                         db.get().collection(collection.ADDRESS_COLLECTION).updateOne({ _id: ObjectID(id) },
                             {
                                 $set: {
@@ -487,7 +465,6 @@ module.exports = {
                     $pull: { products: { item: ObjectID(proId) } }
                 }).then(async (response) => {
                     let cartcount = await db.get().collection(collection.CART_COLLECTION).findOne({ _id: ObjectID(cartId), })
-                    console.log("cart count");
                     if (cartcount.products[0]) {
                         resolve({ removeProduct: true })
                     }
@@ -501,7 +478,6 @@ module.exports = {
     },
     placeOrder: (order, products, total, userId) => {
         return new Promise(async (resolve, reject) => {
-            console.log("vendor id");
             let vendorId = products[0].store
             let status = 'pending';
             let orderAddress = await db.get().collection(collection.ADDRESS_COLLECTION).findOne({ _id: ObjectID(order.address) })
@@ -595,13 +571,10 @@ module.exports = {
         })
     },
     changeProductQuantity: (details,userId) => {
-        console.log(details);
         details.count = parseInt(details.count);
         details.quantity = parseInt(details.quantity);
-        console.log(details);
         return new Promise((resolve, reject) => {
             if (details.count == -1 && details.quantity == 1) {
-                console.log("entered on remove");
                 db.get().collection(collection.CART_COLLECTION)
                     .updateOne({ _id: ObjectID(details.cart) },
                         {
@@ -623,12 +596,6 @@ module.exports = {
                             let quantity = product.products[productExist].quantity
                             let price = product.products[productExist].price;
                             let total = quantity * price
-                            console.log(productExist);
-                            console.log(product);
-                            console.log(productDetail);
-                            console.log(quantity);
-                            console.log(price);
-                            console.log(price);
                             db.get().collection(collection.CART_COLLECTION).updateOne({ user: ObjectID(userId), 'products.item': ObjectID(details.product) },
                                 {
                                     $set: {

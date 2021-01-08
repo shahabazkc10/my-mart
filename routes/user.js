@@ -147,7 +147,7 @@ router.post('/signup', (req, res) => {
 })
 
 router.get('/view/:vendorid/a', (req, res) => {
-  console.log("inside the vendor first");
+
   if (req.session.user) {
     userHelpers.getCategory().then((categories) => {
       res.render('user/get-category', { user: true, response: req.session.user.username, categories })
@@ -161,10 +161,9 @@ router.get('/view/:vendorid/a', (req, res) => {
   }
 })
 router.get('/view/:vendorid/:catid', (req, res) => {
-  console.log("inside the vendor second");
+
   let vendorId = req.params.vendorid;
   let catId = req.params.catid;
-  console.log(vendorId + '  ' + catId);
   userHelpers.getProducts(vendorId, catId).then((product) => {
     if (req.session.user) {
       res.render('user/view-products', { user: true, product, response: req.session.user.username })
@@ -328,13 +327,12 @@ router.get('/place-order', verifyUserLogin, async (req, res) => {
   }
 })
 router.post('/place-order', verifyUserLogin, async (req, res) => {
-  console.log(req.body);
+
   let userId = req.session.user._id;
   let products = await userHelpers.getCartProductList(userId)
-  console.log("products");
-  console.log(products[0].products);
+
   let totalPrice = await userHelpers.getTotalAmount(userId)
-  console.log("products");
+
   userHelpers.placeOrder(req.body, products, totalPrice, userId).then((orderObj) => {
     if (req.body.payment == 'cod') {
       userHelpers.changePaymentStatus(orderObj, userId).then(() => {
@@ -372,17 +370,14 @@ router.get('/order-detail/:id', verifyUserLogin, async (req, res) => {
 router.post('/verify-payment', (req, res) => {
   let userId = req.session.user._id;
   let orderId = req.body.orderId
-  console.log(orderId);
   userHelpers.verifyPayment(req.body,orderId).then(() => {
     let oldOrderId = req.body.oldorderId;
     
     userHelpers.changePaymentStatus(req.body['order[receipt]'], userId).then(() => {
-      console.log("payment success");
       let orderId = req.body['order[receipt]']
       res.json({ status: true, orderId: orderId })
     })
   }).catch((err) => {
-    console.log("payment failed");
     console.log(err);
     res.json({ status: false, errMsg: '' })
   })

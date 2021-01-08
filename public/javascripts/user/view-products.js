@@ -28,11 +28,15 @@ function addToCart(proId, catID, storeId) {
                     data: store,
                     success: (response) => {
                         if (response.status) {
-                            console.log("success")
-                            location.reload()
+                            let url = window.location.href;
+                            $('#section').load(url+ ' #section')
+                            document.getElementById("addToCart").style.display="block";
+                            setTimeout(function () {
+                                document.getElementById("addToCart").style.display="none";
+                            }, 3000);
                         }
                         else {
-                            location.reload();
+                            
                             console.log("error")
                         }
                     }
@@ -44,7 +48,8 @@ function addToCart(proId, catID, storeId) {
                 $('#cancelclick').click(function () {
                     $('#a' + proId).modal('hide')
                     document.getElementById('id01').style.display = 'none';
-                    location.reload()
+                    let url = window.location.href;
+                    $('#section').load(url+ ' #section')
                 })
                 $('#deleteclick').click(function () {
                     let newData = { proId: proId, storeId: storeId }
@@ -54,7 +59,9 @@ function addToCart(proId, catID, storeId) {
                         data: newData,
                         success: () => {
                             console.log("deleted other cart products")
-                            location.reload();
+                            let url = window.location.href;
+                            $('#section').load(url+ ' #section')
+                            document.getElementById("addToCart").style.display="block";
                         },
                         error: () => {
                             console.log("error while deleting;")
@@ -71,7 +78,9 @@ function addToCart(proId, catID, storeId) {
                     success: (response) => {
                         if (response.status) {
                             console.log("success")
-                            location.reload()
+                            let url = window.location.href;
+                            $('#section').load(url+ ' #section')
+                            document.getElementById("addToCart").style.display="block";
                         }
                         else {
                             location.replace('/tempo-login')
