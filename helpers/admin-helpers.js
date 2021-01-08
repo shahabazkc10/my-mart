@@ -413,5 +413,12 @@ module.exports = {
                 resolve(status)
             })
         })
+    },
+    totalOrders:()=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.ORDER_COLLECTION).count().then((orderCount)=>{
+                resolve(orderCount)
+            })
+        })
     }
 }

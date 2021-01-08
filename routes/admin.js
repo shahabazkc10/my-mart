@@ -18,6 +18,7 @@ var verifyAdminLogin = (req, res, next) => {
 
 /* GET users listing. */
 router.get('/', verifyAdminLogin, function (req, res) {
+
     adminHelpers.addAdmin()
     adminHelpers.getVendors().then((vendors) => {
         adminHelpers.vendorsLive().then((vendorsLive) => {
@@ -178,7 +179,9 @@ router.get('/users', verifyAdminLogin, (req, res) => {
     adminHelpers.getUser().then((user) => {
         adminHelpers.totalUsers().then((totalUsers) => {
             adminHelpers.totalBanned().then((totalBanned) => {
-                res.render('admin/users', { user, admin: true, totalBanned, totalUsers, response: req.session.admin.username, totalUsers })
+                adminHelpers.totalOrders().then((totalOrders)=>{
+                     res.render('admin/users', { user, admin: true,totalOrders, totalBanned, totalUsers, response: req.session.admin.username, totalUsers })
+                })  
             })
         })
     })

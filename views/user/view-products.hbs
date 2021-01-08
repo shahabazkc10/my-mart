@@ -1,3 +1,4 @@
+{{#if product}}
 <center>
     <div class="col-lg-3 col-md-6 col-8 mb-2">
         <div class="input-icons" style="border: 2px solid black;">
@@ -119,6 +120,16 @@
     </div>
     <br><br><br>
 </div>
+{{else}}
+<div class="container mt-5">
+    <div class="jumbotron">
+     <center class="mt-5"><h1> No products found in this category from this seller <i class="fa fa-search" style="font-size:48px;color:black"></i></h1></center>       
+    </div>
+
+</div>
+
+{{/if}}
+
 
 <link rel="stylesheet" href="/css/user/view-products.css" type="text/css">
 <script src="/javascripts/user/view-products.js"></script>
