@@ -550,7 +550,7 @@ module.exports = {
             });
         })
     },
-    verifyPayment: (details) => {
+    verifyPayment: (details,orderId) => {
         return new Promise((resolve, reject) => {
             const crypto = require('crypto')
             let hmac = crypto.createHmac('sha256', 'Iyh3NzphTK7naAmLqgTXlTOB')
@@ -559,6 +559,16 @@ module.exports = {
             if (hmac == details['payment[razorpay_signature]']) {
                 resolve()
             } else {
+                db.get().collection(collection.ORDER_COLLECTION)
+                .updateOne({ _id: ObjectID(orderId) },
+                    {
+                        $set: {
+                            status: 'rejected',
+                            paymentGateway:'failed'
+                        }
+                    }).then(() => {
+                        resolve()
+                    })
                 reject()
             }
         })
@@ -646,7 +656,7 @@ module.exports = {
     },
     getOrderProducts:(userId)=>{
         return new Promise((resolve,reject)=>{
-            db.get().collection(collection.ORDER_COLLECTION).find({userId:ObjectID(userId)}).toArray().then((orders)=>{
+            db.get().collection(collection.ORDER_COLLECTION).find({userId:ObjectID(userId),$or:[{status:'placed'},{status:'Order Delivered'}]}).toArray().then((orders)=>{
                 resolve(orders)
             })
         })

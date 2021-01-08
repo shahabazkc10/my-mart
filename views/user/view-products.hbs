@@ -1,43 +1,40 @@
 <center>
-    <div class="col-lg-3 col-md-6 col-8">
+    <div class="col-lg-3 col-md-6 col-8 mb-2">
         <div class="input-icons" style="border: 2px solid black;">
             <i class="fa fa-search ml-2" style="font-size:32px"></i>
             <input type="text" value="Search" class="input-field" name="" id="">
         </div>
     </div>
-    <div>
-        <b>Show products by seller</b>
-        <div class="dropdown">
-            <input type="button" onclick="searchFunction()" class="dropbtn btn btn-success mb-2" value="Show Sellers">
-            <div id="myDropdown" class="dropdown-content">
-                <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-                {{#each stores}}
-                <a href="/view-products-seller/{{this._id}}/{{../categoryId}}">{{this.storename}}</a>
-                {{/each}}
-            </div>
-        </div>
-    </div>
 </center>
-<section>
-    <div class="container">
+<section class="mt-2">
+    <div class="container ">
         <div class="row">
             {{#each product}}
-            <div class="col-lg-3 col-md-4 col-6 mb-2" data-toggle="modal" class="{{this.storename}}"
-                data-target="#a{{this._id}}">
-
-                <div style="height: 390px;">
+            <div class="col-lg-3 col-md-4 col-6 ">
+                <div style="height: 400px;">
                     <div class="card" style="">
-                        <img class="card-img-top" style="height:13rem" src="/product-images/{{this._id}}.jpg"
-                            alt="Card image cap">
-                        <div class="card-body" style="font-size: 12px;">
-                            <h5 class="card-title">{{this.name}}</h5>
-                            <p class="card-text">{{this.description}}</p>
-                            <p class="card-text">₹ {{this.price}}<a
+                        <div data-toggle="modal" class="{{this.storename}}"
+                data-target="#a{{this._id}}">
+                            <img class="card-img-top" style="height:11rem" src="/product-images/{{this._id}}.jpg"
+                                alt="Card image cap">
+                        </div>
+                        <div data-toggle="modal" class="{{this.storename}}"
+                data-target="#a{{this._id}}">
+                            <div class="card-body" style="font-size: 12px;">
+                                <h5 class="card-title">{{this.name}}</h5>
+                                <p class="card-text">{{this.description}}</p>
+
+                                </p>
+                                <p class="card-text" style="font-size: 12px;">Selled by: {{this.storename}}</p>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="card-text ml-3 mr-2">₹ {{this.price}}<a
                                     onclick="addToCart('{{this._id}}','{{../categoryId}}','{{this.storeId}}')"
                                     class="btn btn-success float-right"><b>+</b></a>
-                            </p>
-                            <p class="card-text" style="font-size: 12px;">Selled by: {{this.storename}}</p>
                         </div>
+
+
                     </div>
                 </div>
             </div>
@@ -72,13 +69,6 @@
                                         <span><i class="fas fa-star"></i></span>
                                         <span><i class="fas fa-star"></i></span>
                                         <span><i class="fas fa-star"></i></span>
-                                    </div>
-                                    <div class="qunatity mb-2">
-                                        <span><b>Quantity: </b><button class="btn btn-primary  text-center"
-                                                style="width: 40px;font-size: 20px;height:50px"><b>-</b></button> 1
-                                            KG
-                                            <button class="btn btn-primary text-center"
-                                                style="width: 40px;font-size: 20px;height:50px"><b>+</b></button></span>
                                     </div>
                                     <div class="paragraph">
                                         <p><b>Description: {{this.description}}</b>

@@ -7,14 +7,14 @@
             <b id="notpaid" style="display: none;" class="m-3">Payment: Not paid</b>
             {{#each orderDetails.products}}
             <div class="row">
-                <div class="col-3 ml-2 mt-3">
+                <div class="col-lg-3 col-md-12 ml-1 mt-3">
                     <ul class="list-group">
                         <li class="list-group-item d-flex justify-content-between 1h-condensed">
-                            <img style="height: 100px;" class="rounded" src="/product-images/{{this.item}}.jpg" alt="">
+                            <img style="height: 100px;width:70px" class="rounded" src="/product-images/{{this.item}}.jpg" alt="">
                         </li>
                     </ul>
                 </div>
-                <div class="col-8">
+                <div class="col-lg-8 col-md-12">
                     <ul class="list-group mb-3 z-depth-1">
                         <li class="list-group-item d-flex justify-content-between lh-condensed">
                             <b>Quantity: {{this.quantity}}({{this.quantitytype}})</b>

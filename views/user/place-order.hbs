@@ -1,30 +1,31 @@
+{{#if total}}
 <main id="main-place-order">
     <form action="" id="checkout-form">
         <div class="container">
             <h2 class="my-5 h2 text-center">Checkout</h2>
             <div class="row">
                 {{#if primaryAddress}}
-                <div class="col-md-5 col-5 mb-5">
+                <div class="col-md-6 col-6 mb-5">
                     <a href="/manage-address" class="btn  btn-info  mt-1 mb-2">+ New address</a>
-                    <div class="card"  style="height: 400px;">
-                        <div id="carddefault">
+                    <div class="card">
+                        <div id="carddefault" class="ml-2">
                             <div align="center" class="custom-control custom-radio">
                                 <input type="radio" class="custom-control-input"
                                     id="defaultaddress{{primaryAddress._id}}" value="{{primaryAddress._id}}"
-                                    name="address" checked>
+                                    name="address" checked><br>
                                 <label class="custom-control-label" for="defaultaddress{{primaryAddress._id}}">
-                                    <h3>Deliver to this address</h3>
+                                    <h5>Deliver to this address</h5>
                                 </label>
                             </div>
                             <span class="ml-2"><b>Default Address</b></span>
                             <br>
                             <div id="defaultaddres" class="ml-2 mr-2">
-                                <span class="form-control"><b>{{primaryAddress.address.name}}</b></span>
-                                <span class="form-control">{{primaryAddress.address.address}}</span>
-                                <span class="form-control">{{primaryAddress.address.town}}</span>
-                                <span class="form-control">{{primaryAddress.address.pincode}}</span>
-                                <span class="form-control">{{primaryAddress.address.state}}</span>
-                                <span class="form-control">{{primaryAddress.address.number}}</span>
+                                <span class="form-control"><b>{{primaryAddress.address.name}}</b></span><br>
+                                <address class="form-control" style="height: 100px;">{{primaryAddress.address.address}}</address></address>
+                                <span class="form-control">{{primaryAddress.address.town}}</span><br>
+                                <span class="form-control">{{primaryAddress.address.pincode}}</span><br>
+                                <span class="form-control">{{primaryAddress.address.state}}</span><br>
+                                <span class="form-control">{{primaryAddress.address.number}}</span><br>
                             </div>
                             <div class="mb-2 mr-2 ml-2">
                                 <a class="btn btn-info form-control mt-1"
@@ -38,47 +39,49 @@
                 </div>
                 {{else}}
                 <div class="col-md-12 col-12 mb-5">
-                    <div  style="background-color: white;height: 100px;">
-                        <center><h3>Add address before checkout</h3>
-                      <a href="/manage-address" class="btn btn-info  mt-1 mb-2">+ New address</a></center  
-                    </div>
-                    
-                </div>
+                    <div style="background-color: white;height: 100px;">
+                        <center>
+                            <h3>Add address before checkout</h3>
+                            <a href="/manage-address" class="btn btn-info  mt-1 mb-2">+ New address</a>
+                        </center </div>
 
-                {{/if}}
-                {{#if primaryAddress}}
-                <div class="col-md-7 col-7">
-                    <h4 class="d-flex justify-content-between align-items-center">
-                        <span class="text-muted">Your checkout items</span>
-                    </h4>
-                    <ul class="list-group mb-3 z-depth-1">
-                        {{#each productsCart}}
-                        <li class="list-group-item d-flex justify-content-between lh-condensed">
-                            <div>
-                                <span class="text-muted">{{this.productName}}</span>
-                                <span class="text-muted">[{{this.productPrice}}X {{this.quantity}}]</span>
-                            </div>
-                            <span class="text-muted">₹{{this.totalproduct}}</span>
-                        </li>
-                        {{/each}}
-                        <li class="list-group-item d-flex justify-content-between">
-                            <span><strong>Total (INR)</strong></span>
-                            <strong>₹{{total}}</strong>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between">
-                            <div id="cartdetail">
-                                <div id="displaypaymentresult" style="color: red;"></div>
-                                <p><strong>Please select your payment method</strong></p>
-                                <div class="custom-control custom-radio mb-2">
-                                    <input type="radio" value="cod" class="custom-control-input" id="cod"
-                                        name="payment">
-                                    <label class="custom-control-label" for="cod">
-                                        <image
-                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT84I26SvhHx7_KaBl2LoUTpkXldAYdQi_aXA&usqp=CAU"
-                                            style='font-size:20px;color:green;width: 100px;'>
-                                    </label>
+                    </div>
+
+                    {{/if}}
+                    {{#if primaryAddress}}
+                    <div class="col-md-6 col-6">
+                        <h4 class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted">Your checkout items</span>
+                        </h4>
+                        <ul class="list-group mb-3 z-depth-1">
+                            {{#each productsCart}}
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div>
+                                    <span class="text-muted">{{this.productName}}</span>
+                                    <span class="text-muted">[{{this.productPrice}}X {{this.quantity}}]</span>
                                 </div>
-                                <div class="custom-control custom-radio mb-2">
+                                <span class="text-muted">₹{{this.totalproduct}}</span>
+                            </li>
+                            {{/each}}
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span><strong>Total (INR)</strong></span>
+                                <strong>₹{{total}}</strong>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <div id="cartdetail">
+                                    <div id="displaypaymentresult" style="color: red;"></div>
+                                    <p><strong>Please select your payment method</strong></p>
+                                    <div class="custom-control custom-radio mb-2">
+                                        <input type="radio" value="cod" class="custom-control-input" id="cod"
+                                            name="payment">
+                                        <label class="custom-control-label" for="cod">
+                                            <image
+                                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT84I26SvhHx7_KaBl2LoUTpkXldAYdQi_aXA&usqp=CAU"
+                                                style='font-size:20px;color:green;width: 100px;'>
+                                        </label>
+                                    </div>
+                                    <!--
+                            <div class="custom-control custom-radio mb-2">
                                     <input type="radio" class="custom-control-input" id="paypal" value="paypal"
                                         name="payment">
                                     <label class="custom-control-label" for="paypal">
@@ -96,58 +99,60 @@
                                             style="font-size:20px;width: 100px;">
                                     </label>
                                 </div>
-                                <div class="custom-control custom-radio mb-2">
-                                    <input type="radio" class="custom-control-input" value="razorpay" id="razorpay"
-                                        name="payment">
-                                    <label class="custom-control-label" for="razorpay">
-                                        <image
-                                            src="https://upload.wikimedia.org/wikipedia/en/thumb/8/89/Razorpay_logo.svg/1280px-Razorpay_logo.svg.png"
-                                            style='font-size:20px;color:green;width: 100px;'>
+                           -->
+                                    <div class="custom-control custom-radio mb-2">
+                                        <input type="radio" required class="custom-control-input" value="razorpay" id="razorpay"
+                                            name="payment">
+                                        <label class="custom-control-label" for="razorpay">
+                                            <image
+                                                src="https://upload.wikimedia.org/wikipedia/en/thumb/8/89/Razorpay_logo.svg/1280px-Razorpay_logo.svg.png"
+                                                style='font-size:20px;color:green;width: 100px;'>
+                                        </label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-lg">Checkout</button>
+                                </div>
+
+                            </li>
+                        </ul>
+
+                    </div>
+                    {{/if}}
+
+                </div>
+
+
+                <div class="row">
+                    {{#each alternativeAddress}}
+                    <div class="col-md-6 col-6 mt-3 mb-4 mt-2">
+                        <div class="card">
+                            <div id="alternative" class="ml-2 mt-2">
+                                <div align="center" class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" value="{{this._id}}"
+                                        id="alternative{{this._id}}" name="address">
+                                    <label class="custom-control-label" for="alternative{{this._id}}">
+                                        <h5>Deliver to this address</h5>
                                     </label>
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-lg">Checkout</button>
+                                <span class="ml-2"><b>Alternative Address</b></span>
+                                <br>
+                                <div id="defaultaddres" class="ml-2 mr-2">
+                                    <span class="form-control"><b>{{address.name}}</b></span><br>
+                                    <address class="form-control" style="height: 100px;">{{address.address}}</address>
+                                    
+                                    <span class="form-control">{{address.town}}</span><br>
+                                    <span class="form-control">{{address.pincode}}</span><br>
+                                    <span class="form-control">{{address.state}}</span><br>
+                                    <span class="form-control">{{address.number}}</span><br>
+                                </div>
                             </div>
-
-                        </li>
-                    </ul>
-
-                </div>
-            {{/if}}
-    
-            </div>
-            
-
-            <div class="row">
-                {{#each alternativeAddress}}
-                <div class="col-md-6 col-6 mt-3 mb-4 mt-2">
-                    <div class="card">
-                        <div id="alternative">
-                            <div align="center" class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" value="{{this._id}}"
-                                    id="alternative{{this._id}}" name="address">
-                                <label class="custom-control-label" for="alternative{{this._id}}">
-                                    <h3>Deliver to this address</h3>
-                                </label>
+                            <div class="mb-2 mr-2 ml-2">
+                                <a class="btn btn-info form-control mt-1">Edit address</a>
                             </div>
-                            <span class="ml-2"><b>Alternative Address</b></span>
-                            <br>
-                            <div id="defaultaddres" class="ml-2 mr-2">
-                                <span class="form-control"><b>{{address.name}}</b></span>
-                                <span class="form-control">{{address.address}}</span>
-                                <span class="form-control">{{address.town}}</span>
-                                <span class="form-control">{{address.pincode}}</span>
-                                <span class="form-control">{{address.state}}</span>
-                                <span class="form-control">{{address.number}}</span>
-                            </div>
-                        </div>
-                        <div class="mb-2 mr-2 ml-2">
-                            <a class="btn btn-info form-control mt-1">Edit address</a>
                         </div>
                     </div>
+                    {{/each}}
                 </div>
-                {{/each}}
             </div>
-        </div>
 
     </form>
 </main>
@@ -193,7 +198,7 @@
             "image": "https://example.com/your_logo",
             "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
             "handler": function (response) {
-                verifyPayment(response, order, oldorderId);
+                verifyPayment(response, order, oldorderId,order.orderId);
             },
             "prefill": {
                 "name": "Gaurav Kumar",
@@ -210,13 +215,13 @@
         var rzp1 = new Razorpay(options);
         rzp1.open();
     }
-    function verifyPayment(payment, order, oldorderId) {
-
+    function verifyPayment(payment, order, oldorderId,orderId) {
+console.log("inside verify payment")
         $.ajax({
             url: '/verify-payment',
 
             data: {
-                payment, order, oldorderId
+                payment, order, oldorderId,orderId
             },
             method: 'post',
             success: (response) => {
@@ -242,3 +247,9 @@
 
     window.onunload = function () { null }; 
 </script>
+{{else}}
+nothing
+<script>
+    location.replace('/cart')
+</script>
+{{/if}}

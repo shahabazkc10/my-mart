@@ -150,7 +150,7 @@ router.get('/view/:vendorid/a', (req, res) => {
   console.log("inside the vendor first");
   if (req.session.user) {
     userHelpers.getCategory().then((categories) => {
-      res.render('user/get-category', { user: true, response: req.session.user.username,categories })
+      res.render('user/get-category', { user: true, response: req.session.user.username, categories })
     })
 
   }
@@ -160,15 +160,21 @@ router.get('/view/:vendorid/a', (req, res) => {
     })
   }
 })
-router.get('/view/:vendorid/:catid',(req,res)=>{
+router.get('/view/:vendorid/:catid', (req, res) => {
   console.log("inside the vendor second");
   let vendorId = req.params.vendorid;
   let catId = req.params.catid;
-  console.log(vendorId+'  '+catId);
-  userHelpers.getProducts(vendorId,catId).then((product)=>{
-     res.render('user/view-products',{user:true,product})
+  console.log(vendorId + '  ' + catId);
+  userHelpers.getProducts(vendorId, catId).then((product) => {
+    if (req.session.user) {
+      res.render('user/view-products', { user: true, product, response: req.session.user.username })
+    }
+    else {
+      res.render('user/view-products', { user: true, product })
+    }
+
   })
- 
+
 })
 router.post('/check-status-cart', verifyUserLogin, (req, res) => {
   let store = req.body.storeId;
@@ -311,9 +317,15 @@ router.get('/place-order', verifyUserLogin, async (req, res) => {
   let userId = req.session.user._id;
   let primaryAddress = await userHelpers.getThisPrimaryAddress(userId)
   let productsCart = await userHelpers.getProductAmount(req.session.user._id);
-  let total = await userHelpers.getTotalAmount(req.session.user._id);
+  let total = 0;
+  total = await userHelpers.getTotalAmount(req.session.user._id);
   let alternativeAddress = await userHelpers.getThisAlternativeAddress(userId)
-  res.render('user/place-order', { total, productsCart, user: true, response: req.session.user.username, primaryAddress, alternativeAddress })
+  if (total > 0) {
+    res.render('user/place-order', { total, productsCart, user: true, response: req.session.user.username, primaryAddress, alternativeAddress })
+  }
+  else {
+    res.render('user/place-order', {  productsCart, user: true, response: req.session.user.username, primaryAddress, alternativeAddress })
+  }
 })
 router.post('/place-order', verifyUserLogin, async (req, res) => {
   console.log(req.body);
@@ -359,8 +371,11 @@ router.get('/order-detail/:id', verifyUserLogin, async (req, res) => {
 })
 router.post('/verify-payment', (req, res) => {
   let userId = req.session.user._id;
-  userHelpers.verifyPayment(req.body).then(() => {
+  let orderId = req.body.orderId
+  console.log(orderId);
+  userHelpers.verifyPayment(req.body,orderId).then(() => {
     let oldOrderId = req.body.oldorderId;
+    
     userHelpers.changePaymentStatus(req.body['order[receipt]'], userId).then(() => {
       console.log("payment success");
       let orderId = req.body['order[receipt]']
