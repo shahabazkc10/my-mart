@@ -1,3 +1,4 @@
+<head><meta name="referrer" content="no-referrer"> <!-- don't send HTTP referer for privacy purpose and to use Google Maps Geocoding API without key --></head>
 <div class="container mt-5">
     <div class="w3-content w3-section" style="height: 300px;">
         <img class="mySlides"
@@ -24,9 +25,53 @@
             </p>
         </div>
         <div class="col-lg-3 col-md-6 col-8 mb-4 mt-4">
+            <script>
+                // hack Google Maps to bypass API v3 key (needed since 22 June 2016 http://googlegeodevelopers.blogspot.com.es/2016/06/building-for-scale-updates-to-google.html)
+                var target = document.head;
+                var observer = new MutationObserver(function (mutations) {
+                    for (var i = 0; mutations[i]; ++i) { // notify when script to hack is added in HTML head
+                        if (mutations[i].addedNodes[0].nodeName == "SCRIPT" && mutations[i].addedNodes[0].src.match(/\/AuthenticationService.Authenticate?/g)) {
+                            var str = mutations[i].addedNodes[0].src.match(/[?&]callback=.*[&$]/g);
+                            if (str) {
+                                if (str[0][str[0].length - 1] == '&') {
+                                    str = str[0].substring(10, str[0].length - 1);
+                                } else {
+                                    str = str[0].substring(10);
+                                }
+                                var split = str.split(".");
+                                var object = split[0];
+                                var method = split[1];
+                                window[object][method] = null; // remove censorship message function _xdc_._jmzdv6 (AJAX callback name "_jmzdv6" differs depending on URL)
+                                //window[object] = {}; // when we removed the complete object _xdc_, Google Maps tiles did not load when we moved the map with the mouse (no problem with OpenStreetMap)
+                            }
+                            observer.disconnect();
+                        }
+                    }
+                });
+                var config = { attributes: true, childList: true, characterData: true }
+                observer.observe(target, config);
+            </script>
+            <script
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAUvMW5rkpS3oRtFC6oHbiNzoqBtGuPJRw&callback=initMap&libraries=places"></script>
+            <script type="text/javascript">
+
+                google.maps.event.addDomListener(window, 'load', intilize);
+                function intilize() {
+
+                    var autocomplete = new google.maps.places.Autocomplete(document.getElementById('txtautocomplete'));
+                    google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                        var places = autocomplete.getplace();
+                        var location = "<b>Location:</b>" + places.formatted_address + "<br>";
+                        location += "<b>Latitude:</b>" + places.geometry.location.A + "<br>";
+                        location += "<b>Longitutde:</b>" + places.geometry.location.F + "<br>";
+                    })
+                    document.getElementById('lblresult').innerHTML = location
+                }
+            </script>
             <div class="input-icons" style="border: 2px solid black;">
                 <i class="fa fa-map-marker-alt mt-2 ml-2" style="font-size:25px"></i>
-                <input type="text" value="Kuthuparamba" class="input-field" name="" id="">
+                <input type="text" placeholder="Enter the address" class="input-field" name="" id="txtautocomplete">
+                <label id="lblresult"></label>
             </div>
         </div>
     </center>
@@ -146,7 +191,7 @@
                                 document.getElementById('current{{this._id}}').innerText = 'Closed now'
                             }
                         </script>
-                        
+
                         <hr style="border: 1px solid;">
                     </div>
                 </a>
