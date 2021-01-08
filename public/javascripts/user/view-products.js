@@ -29,10 +29,14 @@ function addToCart(proId, catID, storeId) {
                     success: (response) => {
                         if (response.status) {
                             console.log("success")
+<<<<<<< HEAD
                             location.reload()
+=======
+                            location.reload();
+>>>>>>> 700b0e0cff5c6c0be60b0b67b77d00979dd4b0c2
                         }
                         else {
-                            location.replace('/tempo-login')
+                            location.reload();
                             console.log("error")
                         }
                     }
@@ -44,7 +48,11 @@ function addToCart(proId, catID, storeId) {
                 $('#cancelclick').click(function () {
                     $('#a' + proId).modal('hide')
                     document.getElementById('id01').style.display = 'none';
+<<<<<<< HEAD
                     location.reload()
+=======
+                    location.reload();
+>>>>>>> 700b0e0cff5c6c0be60b0b67b77d00979dd4b0c2
                 })
                 $('#deleteclick').click(function () {
                     let newData = { proId: proId, storeId: storeId }
@@ -54,7 +62,11 @@ function addToCart(proId, catID, storeId) {
                         data: newData,
                         success: () => {
                             console.log("deleted other cart products")
+<<<<<<< HEAD
                             location.reload()
+=======
+                            location.reload();
+>>>>>>> 700b0e0cff5c6c0be60b0b67b77d00979dd4b0c2
 
                         },
                         error: () => {
@@ -72,7 +84,11 @@ function addToCart(proId, catID, storeId) {
                     success: (response) => {
                         if (response.status) {
                             console.log("success")
+<<<<<<< HEAD
                             location.reload()
+=======
+                            location.reload();
+>>>>>>> 700b0e0cff5c6c0be60b0b67b77d00979dd4b0c2
                         }
                         else {
                             location.replace('/tempo-login')
