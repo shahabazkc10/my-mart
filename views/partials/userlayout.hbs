@@ -1,15 +1,16 @@
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <div id="notifications">
     <center>
-        <div  id="addToCart" style="display: none;">
-            <span class="btn text-light bg-success">Added to cart successfully <i class="fa fa-check mt-1" style="font-size:22px;color:white"></i></span>
+        <div id="addToCart" style="display: none;">
+            <span class="btn text-light bg-success">Added to cart successfully <i class="fa fa-check mt-1"
+                    style="font-size:22px;color:white"></i></span>
         </div>
     </center>
 
 </div>
 <style>
     .fixed-header {
-        top:0;
+        top: 0;
         width: 100%;
         margin: 0 auto;
         position: fixed;
@@ -20,6 +21,7 @@
         z-index: 999;
     }
 </style>
+
 <body data-spy="scroll" data-offset="15">
     <nav id="navbar" class="navbar navbar-expand-lg navbar-light fixed-header" style="background-color: white;">
         <a class="navbar-brand" href="/" style="color: green;font-size: xx-large;"><b>MY MART</b></a>
@@ -128,10 +130,10 @@
         </div>
     </div>
 
-    </div>
     {{#each products}}
     <div style="display: none;" id="content{{this.product._id}}"></div>
     {{/each}}
+
     <script>
         function loaddata(id) {
             $('#cartdisplay').hide();
@@ -141,7 +143,17 @@
             $('#modalmain').modal('hide')
         }
     </script>
+    <style>
+        #sticky-footer {
+            flex-shrink: none;
+        }
 
+        .footer {
+            bottom: 0;
+        }
+    </style>
+
+    
 
 
     <link rel="stylesheet" href="/css/user/userlayout.css">
