@@ -53,6 +53,118 @@
 
     </section>
 </div>
+<div class="wrapperfooter">
+        
+        <div class="push">
+
+        </div>
+    </div>
+
+    <style>
+        html,
+        body{
+            height: 70%;
+        }
+        .wrapperfooter{
+            min-height: 100%;
+            height: auto !important;
+            height: 100%;
+            margin: 0 auto -142px;
+        }
+        footer {
+            left: 3px;
+            bottom: 0px;
+            width: 100%;
+            right: 3px;
+            margin-top: 100px;
+        }
+
+        .footer,
+        .push {
+            height: 142px;
+        }
+    </style>
+    <div class="footer text-light" id="footerMymart">
+        <footer id="sticky-footer" class="py-4 bg-dark text-light text-light-50">
+            <div class="flex-center ml-3">
+                <ul class="ml-3">
+                    <li><a title="Go to Home page" href="/" class="text-light"> Home page</a></li>
+                    <li><a title="Go to Orders section" href="/view-orders" class="text-light"> Your Order</a></li>
+                    <li><a title="Go to Cart" href="/cart" class="text-light"> Cart</a></li>
+                    <li><a title="Go to Address section" href="/manage-address" class="text-light"> Manage address</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="container text-center">
+                <h5>FOLLOW US ON SOCIAL MEDIA</h5>
+                <section id="lab_social_icon_footer">
+                    <!-- Include Font Awesome Stylesheet in Header -->
+                    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+                    <div class="container">
+                        <div class="text-center center-block">
+                            <a href="https://www.facebook.com/bootsnipp"><i id="social-fb"
+                                    class="fa fa-facebook-square fa-3x social"></i></a>
+                            <a href="https://twitter.com/bootsnipp"><i id="social-tw"
+                                    class="fa fa-twitter-square fa-3x social"></i></a>
+                            <a href="https://plus.google.com/+Bootsnipp-page"><i id="social-gp"
+                                    class="fa fa-google-plus-square fa-3x social"></i></a>
+                            <a href="mailto:#"><i id="social-em" class="fa fa-envelope-square fa-3x social"></i></a>
+                            <a href=""><i id="social-em" class="fa fa-instagram fa-3x social"></i></a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <center><small class="text-center">Copyright &copy; MY MART 2020-2021</small></center>
+
+        </footer>
+    </div>
+    <style>
+        #lab_social_icon_footer {
+            padding: 0px 0;
+            background-color: white;
+        }
+
+        #lab_social_icon_footer a {
+            color: #333;
+        }
+
+        #lab_social_icon_footer .social:hover {
+            -webkit-transform: scale(1.1);
+            -moz-transform: scale(1.1);
+            -o-transform: scale(1.1);
+        }
+
+        #lab_social_icon_footer .social {
+            -webkit-transform: scale(0.8);
+            /* Browser Variations: */
+
+            -moz-transform: scale(0.8);
+            -o-transform: scale(0.8);
+            -webkit-transition-duration: 0.5s;
+            -moz-transition-duration: 0.5s;
+            -o-transition-duration: 0.5s;
+        }
+
+        /*
+    Multicoloured Hover Variations
+*/
+
+        #lab_social_icon_footer #social-fb:hover {
+            color: #3B5998;
+        }
+
+        #lab_social_icon_footer #social-tw:hover {
+            color: #4099FF;
+        }
+
+        #lab_social_icon_footer #social-gp:hover {
+            color: #d34836;
+        }
+
+        #lab_social_icon_footer #social-em:hover {
+            color: red;
+        }
+    </style>
 <p id="paymentmethod" hidden>{{orderDetails.paymentGateway}}</p>
 <script>
     if(document.getElementById('paymentmethod').innerHTML=='razorpay'){

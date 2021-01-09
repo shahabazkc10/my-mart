@@ -30,8 +30,13 @@
                                     </span><br>
                                     <span>
                                         <b>Quantity</b>
-                                        <button onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{this.product.storeId}}',-1)" class="btn btn-dark mr-2 ml-1">-</button><span id="quantity{{this.product._id}}">{{this.quantity}}</span>
-                                        <button onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{this.product.storeId}}',1)" class="btn btn-dark ml-1">+</button>
+                                        <button
+                                            onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{this.product.storeId}}',-1)"
+                                            class="btn btn-dark mr-2 ml-1">-</button><span
+                                            id="quantity{{this.product._id}}">{{this.quantity}}</span>
+                                        <button
+                                            onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{this.product.storeId}}',1)"
+                                            class="btn btn-dark ml-1">+</button>
                                     </span><br>
                                     <span class="mt-5">
                                         <b>Price: ₹ {{this.product.price}} / per {{this.product.quantitytype}}</b>
@@ -88,31 +93,32 @@
 
     {{/if}}
 </section>
+
 <script>
-    function changeQuantity(cartId,proId,storeId,count){
-        let quantity = parseInt(document.getElementById('quantity'+proId).innerHTML)
+    function changeQuantity(cartId, proId, storeId, count) {
+        let quantity = parseInt(document.getElementById('quantity' + proId).innerHTML)
         count = parseInt(count)
         $.ajax({
-            url:'/change-product-quantity',
-            data:{
-                cart:cartId,
-                product:proId,
-                store:storeId,
-                count:count,
-                quantity:quantity
+            url: '/change-product-quantity',
+            data: {
+                cart: cartId,
+                product: proId,
+                store: storeId,
+                count: count,
+                quantity: quantity
             },
-            method:'post',
-            success:(response)=>{
-                if(response.removeProduct){
+            method: 'post',
+            success: (response) => {
+                if (response.removeProduct) {
                     console.log("removeproduct")
-                   // document.getElementById('cartItemTotal').innerHTML = cartItemT;;
-                   // document.getElementById('cart-count').innerHTML = cartItemT;
+                    // document.getElementById('cartItemTotal').innerHTML = cartItemT;;
+                    // document.getElementById('cart-count').innerHTML = cartItemT;
                     $('#fullCart').load('cart #fullCart')
 
                 }
-                else if(response.quantityChange){
+                else if (response.quantityChange) {
                     console.log("quantity change")
-                    document.getElementById('quantity'+proId).innerHTML = quantity + count
+                    document.getElementById('quantity' + proId).innerHTML = quantity + count
                     $('#fullCart').load('cart #fullCart')
                 }
             }
