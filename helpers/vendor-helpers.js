@@ -158,10 +158,11 @@ module.exports = {
         })
     },
     getStatus: (vendorId) => {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             var date = new Date();
             var hours = date.getHours();
             var minutes = date.getMinutes();
+            console.log(date);
             if (minutes > 9 && hours > 9) {
                 var time = (hours + ':' + minutes)
             }
@@ -174,111 +175,327 @@ module.exports = {
             else if (minutes < 10 && hours < 10) {
                 var time = ('0' + hours + ':0' + minutes)
             }
-            db.get().collection(collection.VENDOR_COLLECTION).findOne({_id:ObjectID(vendorId)}).then((vendor)=>{
-                if (time > vendor.opentime && time < vendor.closetime) {
+            console.log(time);
+            let openTime = await db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) })
+            let hoursopentime = openTime.opentime
+            let hoursclosetime = openTime.closetime
+            console.log('start');
+            hoursopentime = parseInt(hoursopentime)
+            hoursclosetime = parseInt(hoursclosetime)
+            console.log(hoursopentime);
+            console.log(hoursclosetime);
+            console.log('end');
+            console.log(openTime.opentime + "   " + openTime.closetime);
+            if (hoursopentime >= 12 && hoursclosetime >= 12) {
+                console.log('opentime is after 12pm and close time is after 12pm');
+                if (time >= openTime.opentime && time >= openTime.closetime) {
+                    console.log('time greater than opentime and time greater than close time');
+                    db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                        {
+                            $set: {
+                                status: false
+                            }
+                        }).then(() => {
+                            db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
+                                resolve(vendor)
+                            })
+                        })
 
-                db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
-                    {
-                        $set: {
-                            status: true
-                        }
+                }
+                else if (time <= openTime.opentime && time <= openTime.closetime) {
+                    console.log('time lesser than opentime and time lesser than close time');
+                    db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                        {
+                            $set: {
+                                status: true
+                            }
+                        }).then(() => {
+                            db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
+                                resolve(vendor)
+                            })
+                        })
+
+                }
+            }
+            else if (hoursopentime < 12 && hoursclosetime < 12) {
+                console.log('opentime is before 12pm and close time is before 12 pm');
+                if (time >= openTime.opentime && time >= openTime.closetime) {
+                    console.log('time greater than opentime and time greater than close time');
+                    db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                        {
+                            $set: {
+                                status: false
+                            }
+                        }).then(() => {
+                            db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
+                                resolve(vendor)
+                            })
+                        })
+
+                }
+                else if (time <= openTime.opentime && time <= openTime.closetime) {
+                    console.log('time less than opentime and time less than closetime');
+                    db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                        {
+                            $set: {
+                                status: true
+                            }
+                        }).then(() => {
+                            db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
+                                resolve(vendor)
+                            })
+                        })
+
+                }
+                else if (time <= openTime.opentime && time >= openTime.closetime) {
+                    console.log('time less than opentime and time greater than closetime');
+                    db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                        {
+                            $set: {
+                                status: false
+                            }
+                        }).then(() => {
+                            db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
+                                resolve(vendor)
+                            })
+                        })
+
+                }
+                else if (time >= openTime.opentime && time <= openTime.closetime) {
+                    console.log('time greater than opentime and time less than closetime');
+                    db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                        {
+                            $set: {
+                                status: true
+                            }
+                        }).then(() => {
+                            db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
+                                resolve(vendor)
+                            })
+                        })
+
+                }
+                else {
+                    console.log('not working');
+                    db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
+                        resolve(vendor)
                     })
+                }
+            }
+            else if (hoursopentime >= 12 && hoursclosetime <= 12) {
+                console.log('opentime is after 12pm and close time is before 12 pm');
+                if (time >= openTime.opentime && time >= openTime.closetime) {
+                    console.log('time greater than opentime and time greater than close time');
+                    db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                        {
+                            $set: {
+                                status: false
+                            }
+                        }).then(() => {
+                            db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
+                                resolve(vendor)
+                            })
+                        })
+
+                }
+                else if (time <= openTime.opentime && time <= openTime.closetime) {
+                    console.log('time lesser than opentime and time less than close time');
+                    db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                        {
+                            $set: {
+                                status: true
+                            }
+                        }).then(() => {
+                            db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
+                                resolve(vendor)
+                            })
+                        })
+
+                }
+                else if (time <= openTime.opentime && time >= openTime.closetime) {
+                    console.log('time less open and great close');
+                    db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                        {
+                            $set: {
+                                status: false
+                            }
+                        }).then(() => {
+                            db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
+                                resolve(vendor)
+                            })
+                        })
+
+                }
+                else if (time >= openTime.opentime && time <= openTime.closetime) {
+                    console.log('time greater open and less close');
+                    db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                        {
+                            $set: {
+                                status: true
+                            }
+                        }).then(() => {
+                            db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
+                                resolve(vendor)
+                            })
+                        })
+
+                }
+                else {
+                    console.log('not working');
+                    db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
+                        resolve(vendor)
+                    })
+                }
+            }
+            else if (hoursopentime <= 12 && hoursclosetime >= 12) {
+                console.log('opentime is before 12pm and close time is after 12 pm');
+                if (time >= openTime.opentime && time >= openTime.closetime) {
+                    console.log('time greater than opentime and time greater than close time');
+                    db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                        {
+                            $set: {
+                                status: false
+                            }
+                        }).then(() => {
+                            db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
+                                resolve(vendor)
+                            })
+                        })
+
+                }
+                else if (time <= openTime.opentime && time <= openTime.closetime) {
+                    console.log('time lesser than opentime and time lesser than close time');
+                    db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                        {
+                            $set: {
+                                status: false
+                            }
+                        }).then(() => {
+                            db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
+                                resolve(vendor)
+                            })
+                        })
+
+                }
+                else if (time <= openTime.opentime && time >= openTime.closetime) {
+                    console.log('time lesser than opentime and time greater than close time');
+                    db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                        {
+                            $set: {
+                                status: false
+                            }
+                        }).then(() => {
+                            db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
+                                resolve(vendor)
+                            })
+                        })
+
+                }
+                else if (time >= openTime.opentime && time <= openTime.closetime) {
+                    console.log('time greater than opentime and time lesser than close time');
+                    db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                        {
+                            $set: {
+                                status: true
+                            }
+                        }).then(() => {
+                            db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
+                                resolve(vendor)
+                            })
+                        })
+
+                }
             }
             else {
-
-                db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
-                    {
-                        $set: {
-                            status: false
-                        }
-                    })
+                console.log('not working');
+                db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
+                    resolve(vendor)
+                })
             }
-            resolve(vendor)
-            })
-            
-        })
-           // currentTime(time)
-            // var hours = time.substring(0, 2);
-            // function currentTime(date) {
-            //       var minutes = time.substring(3, 5);
-            //       hours = parseFloat(hours)
-            //       minutes = parseFloat(minutes)
-            //       var ampm = hours >= 12 ? 'pm' : 'am';
-            //       hours = hours ? hours : 12; // the hour '0' should be '12'
-            //       hours = hours % 12;
-            //       minutes = minutes < 10 ? '0' + minutes : minutes;
-            //       return strTime;
-            //       var strTime = hours + ':' + minutes + '' + ampm;
-            //    let current = currentTime()
-            //   }
-            //   let vendorTimes = await db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) })
-            //   console.log(vendorTimes.opentime + " " + vendorTimes.closetime);
-            //   formatOpen(vendorTimes.opentime)
-            //   ///                                              open time 12 hours convertion - open time                               ///
-            //   var hours = vendorTimes.opentime.substring(0, 2);
-            //    var minutes = vendorTimes.opentime.substring(3, 5);
-            //   function formatOpen(date) {
-            //       hours = parseFloat(hours)
-            //       minutes = parseFloat(minutes)
-            //       var ampm = hours >= 12 ? 'pm' : 'am';
-            //       hours = hours % 12;
-            //       hours = hours ? hours : 12; // the hour '0' should be '12'
-            //       minutes = minutes < 10 ? '0' + minutes : minutes;
-            //       var strTime = hours + ':' + minutes + '' + ampm;
-            //       return strTime;
-            //   }
-            //    let openTime = formatOpen()
-            //    ///                                                            close time                                              ///
-            //    formatClose(vendorTimes.closetime)
-            //    var hours = vendorTimes.closetime.substring(0, 2);
-            //    var minutes = vendorTimes.closetime.substring(3, 5);
-            //    function formatClose(date) {
-            //        hours = parseFloat(hours)
-            //        minutes = parseFloat(minutes)
-            //        var ampm = hours >= 12 ? 'pm' : 'am';
-            //        hours = hours % 12;
-            //        hours = hours ? hours : 12; // the hour '0' should be '12'
-            //        minutes = minutes < 10 ? '0' + minutes : minutes;
-            //        var strTime = hours + ':' + minutes + '' + ampm;
-            //        return strTime;
-            //    }
-            //    let closeTime = formatClose()
-            //    console.log(openTime + " " + closeTime + " " + current);
-            //    db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
-            //if(current.includes('pm')&&openTime.includes('pm')&&closeTime.includes('pm')){
-            //  console.log('all pm');
-            //}
-            //else if(current.includes('am')&&openTime.includes('am')&&closeTime.includes('am')){
-            //    console.log('all am');
-            // }
-            //else if(current.includes('pm')&&openTime.includes('am')&&closeTime.includes('pm')){
-            //    console.log('current pm\nopen am\nclose pm');
-            //    var res = current.replace(/\D/g, "");
-            //    console.log(res);
-            //    if(current>=openTime&&current<closeTime){
-            //        console.log('opened');
-            //  }
-            //    else{
-            //        console.log('closed');
-            //    }
-            //}
-            //else if(current.includes('pm')&&openTime.includes('am')&&closeTime.includes('am')){
-            //  console.log(' current pm\n open am\n close am');
-            //}
-            //else if(current.includes('am')&&openTime.includes('pm')&&closeTime.includes('pm')){
-            //    console.log(' current am\n open pm\n close pm');
-            //}
-            //else if(current.includes('am')&&openTime.includes('am')&&closeTime.includes('pm')){
-            //    console.log(' current am\n open am\n close pm');
-            //}
-            //else if(current.includes('am')&&openTime.includes('pm')&&closeTime.includes('am')){
-            //    console.log(' current am\n open pm\n close am');
-            //}
-            //else if(current.includes('pm')&&openTime.includes('pm')&&closeTime.includes('am')){
-            //    console.log(' current pm \n open pm\n close am');
-            //}
 
-},
+        })
+        // currentTime(time)
+        // var hours = time.substring(0, 2);
+        // function currentTime(date) {
+        //       var minutes = time.substring(3, 5);
+        //       hours = parseFloat(hours)
+        //       minutes = parseFloat(minutes)
+        //       var ampm = hours >= 12 ? 'pm' : 'am';
+        //       hours = hours ? hours : 12; // the hour '0' should be '12'
+        //       hours = hours % 12;
+        //       minutes = minutes < 10 ? '0' + minutes : minutes;
+        //       return strTime;
+        //       var strTime = hours + ':' + minutes + '' + ampm;
+        //    let current = currentTime()
+        //   }
+        //   let vendorTimes = await db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) })
+        //   console.log(vendorTimes.opentime + " " + vendorTimes.closetime);
+        //   formatOpen(vendorTimes.opentime)
+        //   ///                                              open time 12 hours convertion - open time                               ///
+        //   var hours = vendorTimes.opentime.substring(0, 2);
+        //    var minutes = vendorTimes.opentime.substring(3, 5);
+        //   function formatOpen(date) {
+        //       hours = parseFloat(hours)
+        //       minutes = parseFloat(minutes)
+        //       var ampm = hours >= 12 ? 'pm' : 'am';
+        //       hours = hours % 12;
+        //       hours = hours ? hours : 12; // the hour '0' should be '12'
+        //       minutes = minutes < 10 ? '0' + minutes : minutes;
+        //       var strTime = hours + ':' + minutes + '' + ampm;
+        //       return strTime;
+        //   }
+        //    let openTime = formatOpen()
+        //    ///                                                            close time                                              ///
+        //    formatClose(vendorTimes.closetime)
+        //    var hours = vendorTimes.closetime.substring(0, 2);
+        //    var minutes = vendorTimes.closetime.substring(3, 5);
+        //    function formatClose(date) {
+        //        hours = parseFloat(hours)
+        //        minutes = parseFloat(minutes)
+        //        var ampm = hours >= 12 ? 'pm' : 'am';
+        //        hours = hours % 12;
+        //        hours = hours ? hours : 12; // the hour '0' should be '12'
+        //        minutes = minutes < 10 ? '0' + minutes : minutes;
+        //        var strTime = hours + ':' + minutes + '' + ampm;
+        //        return strTime;
+        //    }
+        //    let closeTime = formatClose()
+        //    console.log(openTime + " " + closeTime + " " + current);
+        //    db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
+        //if(current.includes('pm')&&openTime.includes('pm')&&closeTime.includes('pm')){
+        //  console.log('all pm');
+        //}
+        //else if(current.includes('am')&&openTime.includes('am')&&closeTime.includes('am')){
+        //    console.log('all am');
+        // }
+        //else if(current.includes('pm')&&openTime.includes('am')&&closeTime.includes('pm')){
+        //    console.log('current pm\nopen am\nclose pm');
+        //    var res = current.replace(/\D/g, "");
+        //    console.log(res);
+        //    if(current>=openTime&&current<closeTime){
+        //        console.log('opened');
+        //  }
+        //    else{
+        //        console.log('closed');
+        //    }
+        //}
+        //else if(current.includes('pm')&&openTime.includes('am')&&closeTime.includes('am')){
+        //  console.log(' current pm\n open am\n close am');
+        //}
+        //else if(current.includes('am')&&openTime.includes('pm')&&closeTime.includes('pm')){
+        //    console.log(' current am\n open pm\n close pm');
+        //}
+        //else if(current.includes('am')&&openTime.includes('am')&&closeTime.includes('pm')){
+        //    console.log(' current am\n open am\n close pm');
+        //}
+        //else if(current.includes('am')&&openTime.includes('pm')&&closeTime.includes('am')){
+        //    console.log(' current am\n open pm\n close am');
+        //}
+        //else if(current.includes('pm')&&openTime.includes('pm')&&closeTime.includes('am')){
+        //    console.log(' current pm \n open pm\n close am');
+        //}
+
+    },
     updateTime: (vendorId, time) => {
         return new Promise((resolve, reject) => {
 
@@ -293,165 +510,165 @@ module.exports = {
                 })
         })
     },
-        newUser: (data) => {
-            return new Promise(async (resolve, reject) => {
-                data.password = await bcrypt.hash(data.password, 10)
-                db.get().collection(collection.USER_COLLECTION).insertOne(data).then((userData) => {
-                    resolve(userData.ops[0]._id)
-                })
+    newUser: (data) => {
+        return new Promise(async (resolve, reject) => {
+            data.password = await bcrypt.hash(data.password, 10)
+            db.get().collection(collection.USER_COLLECTION).insertOne(data).then((userData) => {
+                resolve(userData.ops[0]._id)
             })
-        },
-            getUsers: (username) => {
-                return new Promise(async (resolve, reject) => {
-                    let user = await db.get().collection(collection.USER_COLLECTION).find({ referredby: username }).toArray()
-                    resolve(user)
-                })
-            },
-                getUser: (id) => {
-                    return new Promise((resolve, reject) => {
-                        db.get().collection(collection.USER_COLLECTION).findOne({ _id: ObjectID(id) }).then((data) => {
-                            resolve(data)
-                        })
+        })
+    },
+    getUsers: (username) => {
+        return new Promise(async (resolve, reject) => {
+            let user = await db.get().collection(collection.USER_COLLECTION).find({ referredby: username }).toArray()
+            resolve(user)
+        })
+    },
+    getUser: (id) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.USER_COLLECTION).findOne({ _id: ObjectID(id) }).then((data) => {
+                resolve(data)
+            })
+        })
+    },
+    updateUser: (id, data) => {
+        return new Promise(async (resolve, reject) => {
+            if (data.password) {
+                data.password = await bcrypt.hash(data.password, 10)
+                db.get().collection(collection.USER_COLLECTION).updateOne({ _id: ObjectID(id) },
+                    {
+                        $set: {
+                            username: data.username,
+                            address: data.address,
+                            email: data.email,
+                            phonenumber: data.phonenumber,
+                            password: data.password
+                        }
+                    }).then(() => {
+                        resolve()
                     })
-                },
-                    updateUser: (id, data) => {
-                        return new Promise(async (resolve, reject) => {
-                            if (data.password) {
-                                data.password = await bcrypt.hash(data.password, 10)
-                                db.get().collection(collection.USER_COLLECTION).updateOne({ _id: ObjectID(id) },
-                                    {
-                                        $set: {
-                                            username: data.username,
-                                            address: data.address,
-                                            email: data.email,
-                                            phonenumber: data.phonenumber,
-                                            password: data.password
-                                        }
-                                    }).then(() => {
-                                        resolve()
-                                    })
-                            }
-                            else {
-                                db.get().collection(collection.USER_COLLECTION).updateOne({ _id: ObjectID(id) },
-                                    {
-                                        $set: {
-                                            username: data.username,
-                                            address: data.address,
-                                            email: data.email,
-                                            phonenumber: data.phonenumber
-                                        }
-                                    }).then(() => {
-                                        resolve()
-                                    })
-                            }
+            }
+            else {
+                db.get().collection(collection.USER_COLLECTION).updateOne({ _id: ObjectID(id) },
+                    {
+                        $set: {
+                            username: data.username,
+                            address: data.address,
+                            email: data.email,
+                            phonenumber: data.phonenumber
+                        }
+                    }).then(() => {
+                        resolve()
+                    })
+            }
 
-                        })
-                    },
-                        banUser: (id) => {
-                            return new Promise(async (resolve, reject) => {
-                                let user = await db.get().collection(collection.USER_COLLECTION).findOne({ _id: ObjectID(id) })
+        })
+    },
+    banUser: (id) => {
+        return new Promise(async (resolve, reject) => {
+            let user = await db.get().collection(collection.USER_COLLECTION).findOne({ _id: ObjectID(id) })
 
-                                let username = user.username;
-                                let address = user.address;
-                                let email = user.email;
-                                let password = user.password;
-                                let phonenumber = user.phonenumber;
+            let username = user.username;
+            let address = user.address;
+            let email = user.email;
+            let password = user.password;
+            let phonenumber = user.phonenumber;
 
-                                db.get().collection(collection.BANNED_USER_COLLECTION).insertOne({ _id: ObjectID(user._id), username, address, email, password, phonenumber })
-                                db.get().collection(collection.USER_COLLECTION).removeOne({ _id: ObjectID(id) }).then(() => {
-                                    resolve()
-                                })
-                            })
-                        },
-                            getBanList: () => {
-                                return new Promise(async (resolve, reject) => {
-                                    let banlist = await db.get().collection(collection.BANNED_COLLECTION).find().toArray()
-                                    resolve(banlist)
-                                })
-                            },
-                                unBan: (id) => {
-                                    return new Promise(async (resolve, reject) => {
-                                        let user = await db.get().collection(collection.BANNED_USER_COLLECTION).findOne({ _id: ObjectID(id) })
-                                        let username = user.username;
-                                        let address = user.address;
-                                        let email = user.email;
-                                        let password = user.password;
-                                        let phonenumber = user.phonenumber;
+            db.get().collection(collection.BANNED_USER_COLLECTION).insertOne({ _id: ObjectID(user._id), username, address, email, password, phonenumber })
+            db.get().collection(collection.USER_COLLECTION).removeOne({ _id: ObjectID(id) }).then(() => {
+                resolve()
+            })
+        })
+    },
+    getBanList: () => {
+        return new Promise(async (resolve, reject) => {
+            let banlist = await db.get().collection(collection.BANNED_COLLECTION).find().toArray()
+            resolve(banlist)
+        })
+    },
+    unBan: (id) => {
+        return new Promise(async (resolve, reject) => {
+            let user = await db.get().collection(collection.BANNED_USER_COLLECTION).findOne({ _id: ObjectID(id) })
+            let username = user.username;
+            let address = user.address;
+            let email = user.email;
+            let password = user.password;
+            let phonenumber = user.phonenumber;
 
-                                        db.get().collection(collection.USER_COLLECTION).insertOne({ _id: ObjectID(user._id), username, address, email, password, phonenumber })
-                                        db.get().collection(collection.BANNED_USER_COLLECTION).removeOne({ _id: ObjectID(id) }).then(() => {
-                                            resolve()
-                                        })
-                                    })
-                                },
-                                    deleteUser: (id) => {
-                                        return new Promise((resolve, reject) => {
-                                            db.get().collection(collection.USER_COLLECTION).removeOne({ _id: ObjectID(id) })
-                                            resolve()
-                                        })
-                                    },
-                                        getCategories: () => {
-                                            return new Promise(async (resolve, reject) => {
-                                                let categories = await db.get().collection(collection.CATEGORY_COLLECTION).find().toArray()
-                                                resolve(categories)
-                                            })
-                                        },
-                                            deleteDisableProduct: (id) => {
-                                                return new Promise((resolve, reject) => {
-                                                    db.get().collection(collection.DISABLEPRODUCT_COLLECTION).removeOne({ _id: ObjectID(id) }).then(() => {
-                                                        resolve()
-                                                    })
-                                                })
-                                            },
-                                                getOrderList: (vendorId) => {
-                                                    return new Promise(async (resolve, reject) => {
-                                                        let orderItems = await db.get().collection(collection.ORDER_COLLECTION).find({ vendor: ObjectID(vendorId), delivered: false }).toArray()
-                                                        resolve(orderItems)
-                                                    })
-                                                },
-                                                    getOrderStatus: () => {
-                                                        return new Promise((resolve, reject) => {
-                                                            db.get().collection(collection.ORDER_STATUS_COLLECTION).find().toArray().then((status) => {
-                                                                resolve(status)
-                                                            })
-                                                        })
-                                                    },
-                                                        updateOrderStatus: (data, id) => {
-                                                            return new Promise((resolve, reject) => {
-                                                                let statusData = data.status;
-                                                                if (statusData == 'Order Delivered') {
-                                                                    db.get().collection(collection.ORDER_COLLECTION).updateOne({ _id: ObjectID(id) },
-                                                                        {
-                                                                            $set: {
-                                                                                status: data.status,
-                                                                                deliveredOn: new Date(),
-                                                                                updatedOn: new Date(),
-                                                                                delivered: true
-                                                                            }
-                                                                        }).then(() => {
-                                                                            resolve()
-                                                                        })
-                                                                }
-                                                                else {
-                                                                    db.get().collection(collection.ORDER_COLLECTION).updateOne({ _id: ObjectID(id) },
-                                                                        {
-                                                                            $set: {
-                                                                                status: data.status,
-                                                                                updatedOn: new Date(),
-                                                                                delivered: false
-                                                                            }
-                                                                        }).then(() => {
-                                                                            resolve()
-                                                                        })
-                                                                }
+            db.get().collection(collection.USER_COLLECTION).insertOne({ _id: ObjectID(user._id), username, address, email, password, phonenumber })
+            db.get().collection(collection.BANNED_USER_COLLECTION).removeOne({ _id: ObjectID(id) }).then(() => {
+                resolve()
+            })
+        })
+    },
+    deleteUser: (id) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.USER_COLLECTION).removeOne({ _id: ObjectID(id) })
+            resolve()
+        })
+    },
+    getCategories: () => {
+        return new Promise(async (resolve, reject) => {
+            let categories = await db.get().collection(collection.CATEGORY_COLLECTION).find().toArray()
+            resolve(categories)
+        })
+    },
+    deleteDisableProduct: (id) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.DISABLEPRODUCT_COLLECTION).removeOne({ _id: ObjectID(id) }).then(() => {
+                resolve()
+            })
+        })
+    },
+    getOrderList: (vendorId) => {
+        return new Promise(async (resolve, reject) => {
+            let orderItems = await db.get().collection(collection.ORDER_COLLECTION).find({ vendor: ObjectID(vendorId), delivered: false }).toArray()
+            resolve(orderItems)
+        })
+    },
+    getOrderStatus: () => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.ORDER_STATUS_COLLECTION).find().toArray().then((status) => {
+                resolve(status)
+            })
+        })
+    },
+    updateOrderStatus: (data, id) => {
+        return new Promise((resolve, reject) => {
+            let statusData = data.status;
+            if (statusData == 'Order Delivered') {
+                db.get().collection(collection.ORDER_COLLECTION).updateOne({ _id: ObjectID(id) },
+                    {
+                        $set: {
+                            status: data.status,
+                            deliveredOn: new Date(),
+                            updatedOn: new Date(),
+                            delivered: true
+                        }
+                    }).then(() => {
+                        resolve()
+                    })
+            }
+            else {
+                db.get().collection(collection.ORDER_COLLECTION).updateOne({ _id: ObjectID(id) },
+                    {
+                        $set: {
+                            status: data.status,
+                            updatedOn: new Date(),
+                            delivered: false
+                        }
+                    }).then(() => {
+                        resolve()
+                    })
+            }
 
-                                                            })
-                                                        },
-                                                            getOrderDeliveredProducts: () => {
-                                                                return new Promise((resolve, reject) => {
-                                                                    db.get().collection(collection.ORDER_COLLECTION).find({ status: 'Order Delivered', delivered: true }).toArray().then((orders) => {
-                                                                        resolve(orders)
-                                                                    })
-                                                                })
-                                                            }
+        })
+    },
+    getOrderDeliveredProducts: () => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.ORDER_COLLECTION).find({ status: 'Order Delivered', delivered: true }).toArray().then((orders) => {
+                resolve(orders)
+            })
+        })
+    }
 }

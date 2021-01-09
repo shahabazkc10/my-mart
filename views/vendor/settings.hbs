@@ -1,15 +1,16 @@
-
-
-<div class="main"onclick="$('.sidenav').hide();$('#divNavBar').show()" style="margin-top: 100px;">
+<div class="main" onclick="$('.sidenav').hide();$('#divNavBar').show()" style="margin-top: 100px;">
     <div class="section m-4">
         <div class="icon">
             <h3><i class="fa fa-gear">Settings</i></h3>
         </div>
-        {{#if status}}
-        <center>Store live</center>
-        {{else}}
-        <center>Store closed</center>
-        {{/if}}
+        <div id="settingssection">
+            {{#if status}}
+            <center>Store live</center>
+            {{else}}
+            <center>Store closed</center>
+            {{/if}}
+        </div>
+
         <section>
             <form id="timeForm" name="timeForm">
                 {{#if vendorD.opentime}}
@@ -78,11 +79,11 @@
                 method: 'POST',
                 data: data,
                 success: function () {
-                    console.log('added')
                     document.getElementById("changedTime").style.display = "block";
                     setTimeout(function () {
                         document.getElementById("changedTime").style.display = "none";
                     }, 3000);
+                    $('#settingssection').load('settings #settingssection')
                 }
             })
         })
