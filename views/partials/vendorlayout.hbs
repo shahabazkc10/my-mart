@@ -26,9 +26,7 @@
     }
 
     .main {
-        margin-left: 190px;
-        /* Same as the width of the sidebar */
-        padding: 0px 10px;
+
     }
 
     /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
@@ -47,9 +45,10 @@
     }
 </style>
 
-
-
-<div class="sidenav">
+<div class="toggle toggle-handler" style="width: 100px;">
+    <button class="openbtn btn btn-success btn-lg" onclick="openNav()">☰</button>
+</div>
+<div class="sidenav" style="display: none;">
     <ul class="list-unstyled ml-2">
         <a href="/vendor" style="text-decoration: none;">
             <li style="color:#A4A6B3 ;pointer-events: none;" class="mb-5">
@@ -111,3 +110,15 @@
 
 
 </div>
+<script>
+    function openNav() {
+
+        $('.sidenav').show()
+        $('.toggle').hide()
+    }
+    $("#main").click(function () {
+        $('.sidenav').hide()
+        $('.toggle').show()
+    });
+
+</script>

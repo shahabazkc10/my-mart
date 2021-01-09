@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" onclick="$('.sidenav').hide();$('.toggle').show()">
     <div class="navbar justify-content-end">
         <div class="navbar-item">
             <a class="btn btn-primary">{{response}}</a>
@@ -7,7 +7,7 @@
 
     </div>
 </div>
-<section id="fullData">
+<section id="fullData" onclick="$('.sidenav').hide();$('.toggle').show()">
     {{#if orders}}
     <div id="main" class="main">
         <div class="section m-4">
@@ -43,7 +43,7 @@
                                                 <button type="submit" class="btn btn-primary mr-3">Submit</button>
                                             </form>
                                         </td>
-                                        <td><a href="">View</a></td>
+                                        <!--    <td><a href="">View</a></td>    -->
                                     </tr>
                                 </table>
                                 <div class="container">
