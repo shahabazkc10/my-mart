@@ -1,8 +1,9 @@
 <div class="main"  onclick="$('.sidenav').hide();$('.toggle').show()">
-    <div class="container bg-white mt-5">
-        <ul class="nav nav-tabs">
+    <div class=" bg-white mt-5">
+        <ul class="nav nav-tabs ml-2">
             <div class="row justify-content-start col-12 ">
-                <a style="width: 100px;" class="btn btn-sm  bg-dark text-light mt-1 mr-1   tabview" data-toggle="tab" onclick="vendor()">
+                <div class="col-12">
+                      <a style="width: 100px;" class="btn btn-sm  bg-dark text-light mt-1 mr-1   tabview" data-toggle="tab" onclick="vendor()">
                     <li class="text-light active" style="pointer-events: none;">Banned Vendors</li>
                 </a>
                 <a style="width: 100px;" class="btn btn-sm  bg-dark text-light mt-1 mr-1  tabview" data-toggle="tab" onclick="user()">
@@ -10,13 +11,15 @@
                 </a>
                 <a style="width: 100px;" class="btn btn-sm  bg-dark text-light mt-1 mr-1  tabview" data-toggle="tab" onclick="categoryManage()">
                     <li class="text-light" style="pointer-events: none;">Category Manage</li>
-                </a>
+                </a>              
+                </div>
+
 
             </div>
 
         </ul>
         <div>
-            <div id="home">
+            <div id="home" class="ml-2">
                 <div class="section bg-white mt-5" style="background-color: white;height: 100%;">
                     <div class="mt-3">
                         <h4 class="ml-2">Banned vendor lists</h4>
