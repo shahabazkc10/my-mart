@@ -1,12 +1,6 @@
-<div class="main" onclick="$('.sidenav').hide();$('.toggle').show()">
-    <div class="navbar justify-content-end">
-        <div class="navbar-item">
-            <a class="btn btn-primary">{{response}}</a>
-            <a href="/vendor/logout" class="btn btn-danger">Logout</a>
-        </div>
-    </div>
-</div>
-<div class="main" onclick="$('.sidenav').hide();$('.toggle').show()">
+
+
+<div class="main"onclick="$('.sidenav').hide();$('#divNavBar').show()">
     <div class="section m-4">
         <div class="icon">
             <h3><i class="fa fa-gear">Settings</i></h3>
@@ -17,10 +11,11 @@
         <center>Store closed</center>
         {{/if}}
         <section>
-            <form action="/vendor/time/{{id}}" method="POST">
+            <form id="timeForm" name="timeForm">
                 {{#if vendorD.opentime}}
-                Open time<input type="time" value="{{vendorD.opentime}}" name="opentime" class="mb-1 ml-1"><br>
-                Close time<input type="time" value="{{vendorD.closetime}}" name="closetime" class="ml-1">
+                Open time<input type="time" value="{{vendorD.opentime}}" id="openTime" name="opentime"
+                    class="mb-1 ml-1"><br>
+                Close time<input type="time" value="{{vendorD.closetime}}" id="closeTime" name="closetime" class="ml-1">
                 <button type="submit" class="btn btn-primary">Update</button>
                 {{else}}
                 Open time<input type="time" name="opentime" class="mb-1 ml-1"><br>
@@ -29,6 +24,7 @@
                 {{/if}}
             </form>
         </section>
+
         <div class="section">
             <div class="mt-3">
                 <h4 class="ml-2">Banned users</h4>
@@ -72,3 +68,21 @@
             </div>
         </div>
     </div>
+    <script>
+
+        $('#timeForm').on('submit', function (e) {
+            e.preventDefault();
+            var data = $(this).serialize();
+            $.ajax({
+                url: '/vendor/time/{{id}}',
+                method: 'POST',
+                data: data,
+                success: function () {
+                    document.getElementById("changedTime").style.display = "block";
+                    setTimeout(function () {
+                        document.getElementById("changedTime").style.display = "none";
+                    }, 3000);
+                }
+            })
+        })
+    </script>

@@ -49,9 +49,34 @@
     }
 </style>
 
+<style>
+    .fixed-header {
+        top:0;
+        width: 100%;
+        margin: 0 auto;
+        position: fixed;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+    }
+</style>
+<div id="divNavBar" style="background-color: white;margin-bottom: 120px;" class="fixed-header">
+    <div id="navbar-toggle" style="background-color: white;" class="scrollnav">
+        <div class="navbar">
+            <div class="toggle">
+                <button class="openbtn btn btn-success btn-lg" onclick="openNav()">☰</button>
+            </div>
+            <div class="navbar-item">
+                <b style="color: green;">MY MART</b>
+            </div>
+            <div class="navbar-item">
+                <a href="/admin/logout" class="btn btn-danger">Logout</a>
+            </div>
+        </div>
 
-<div class="toggle toggle-handler" style="width: 100px;">
-    <button class="openbtn btn btn-success btn-lg" onclick="openNav()">☰</button>
+    </div>
 </div>
 
 <div class="sidenav ml-2" style="display: none;">
@@ -101,11 +126,8 @@
     function openNav() {
 
         $('.sidenav').show()
-        $('.toggle').hide()
+        $('#divNavBar').hide()
     }
-    $("#main").click(function () {
-        $('.sidenav').hide()
-        $('.toggle').show()
-    });
+
 
 </script>

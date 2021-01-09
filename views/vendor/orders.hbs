@@ -1,13 +1,4 @@
-<div class="main" onclick="$('.sidenav').hide();$('.toggle').show()">
-    <div class="navbar justify-content-end">
-        <div class="navbar-item">
-            <a class="btn btn-primary">{{response}}</a>
-            <a href="/vendor/logout" class="btn btn-danger">Logout</a>
-        </div>
-
-    </div>
-</div>
-<section id="fullData" onclick="$('.sidenav').hide();$('.toggle').show()">
+<section id="fullData" style="margin-top: 100px;"  onclick="$('.sidenav').hide();$('#divNavBar').show()">
     {{#if orders}}
     <div id="main" class="main">
         <div class="section m-4">

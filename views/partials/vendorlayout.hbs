@@ -26,7 +26,7 @@
     }
 
     .main {
-
+        top: 40px;
     }
 
     /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
@@ -44,10 +44,46 @@
         background-color: red;
     }
 </style>
+<div id="notifications">
+    <center>
+        <div id="changedTime" style="display: none;overflow: hidden;">
+            <span class="btn text-light bg-success">Changed Time Successfully <i class="fa fa-check mt-1"
+                    style="font-size:22px;color:white"></i></span>
+        </div>
+    </center>
 
-<div class="toggle toggle-handler" style="width: 100px;">
-    <button class="openbtn btn btn-success btn-lg" onclick="openNav()">☰</button>
 </div>
+<style>
+    .fixed-header {
+        top:0;
+        width: 100%;
+        margin: 0 auto;
+        position: fixed;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+    }
+</style>
+<div id="divNavBar" style="background-color: white;margin-bottom: 120px;" class="fixed-header">
+    <div id="navbar-toggle" style="background-color: white;" class="scrollnav">
+        <div class="navbar">
+            <div class="toggle">
+                <button class="openbtn btn btn-success btn-lg" onclick="openNav()">☰</button>
+            </div>
+            <div class="navbar-item">
+                <b style="color: green;">MY MART</b>
+            </div>
+            <div class="navbar-item">
+                <a class="btn btn-primary">{{response}}</a>
+                <a href="/vendor/logout" class="btn btn-danger">Logout</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 <div class="sidenav" style="display: none;">
     <ul class="list-unstyled ml-2">
         <a href="/vendor" style="text-decoration: none;">
@@ -114,11 +150,8 @@
     function openNav() {
 
         $('.sidenav').show()
-        $('.toggle').hide()
+        $('#divNavBar').hide()
     }
-    $(html).click(function () {
-        $('.sidenav').hide()
-        $('.toggle').show()
-    });
+
 
 </script>
