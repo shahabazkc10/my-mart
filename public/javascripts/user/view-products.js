@@ -61,7 +61,11 @@ function addToCart(proId, catID, storeId) {
                             console.log("deleted other cart products")
                             let url = window.location.href;
                             $('#section').load(url+ ' #section')
+                            document.getElementById('id01').style.display='none';
                             document.getElementById("addToCart").style.display="block";
+                            setTimeout(function () {
+                                document.getElementById("addToCart").style.display="none";
+                            }, 3000);
                         },
                         error: () => {
                             console.log("error while deleting;")
@@ -81,6 +85,9 @@ function addToCart(proId, catID, storeId) {
                             let url = window.location.href;
                             $('#section').load(url+ ' #section')
                             document.getElementById("addToCart").style.display="block";
+                            setTimeout(function () {
+                                document.getElementById("addToCart").style.display="none";
+                            }, 3000);
                         }
                         else {
                             location.replace('/tempo-login')
