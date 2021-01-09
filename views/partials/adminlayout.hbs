@@ -6,7 +6,7 @@
     .sidenav {
         height: 100%;
         /* Full-height: remove this if you want "auto" height */
-        width: 140px;
+        width: 120px;
         /* Set the width of the sidebar */
         position: fixed;
         /* Fixed Sidebar (stay in place on scroll) */
@@ -24,7 +24,7 @@
     }
 
     .main {
-        margin-left: 160px;
+        
         /* Same as the width of the sidebar */
         padding: 0px 10px;
     }
@@ -50,8 +50,11 @@
 </style>
 
 
-<button class="btn btn-dark sidenav">fsf</button>
-<div class="sidenav ml-2">
+<div class="toggle" style="width: 100px;">
+    <button class="openbtn " onclick="openNav()">☰</button>
+</div>
+
+<div class="sidenav ml-2" style="display: none;">
     <ul class="list-unstyled" style="text-decoration: none;">
         <a href="/admin" style="text-decoration: none;">
             <li style="color:white ;pointer-events: none;" class="mb-5">
@@ -82,7 +85,7 @@
                 <hr>
             </li>
         </a>
-      <!--  <a href="/admin/others">
+        <!--  <a href="/admin/others">
             <li>
                 <hr>
                 <i style="color: white;" class="fa fa-dedent"> Other</i>
@@ -94,3 +97,15 @@
 
 
 </div>
+<script>
+    function openNav() {
+
+        $('.sidenav').show()
+        $('.toggle').hide()
+    }
+    $("#main").click(function () {
+        $('.sidenav').hide()
+        $('.toggle').show()
+    });
+
+</script>
