@@ -17,9 +17,6 @@ var verifyUserLogin = (req, res, next) => {
   }
   else {
     let url = req.url;
-    console.log('url');
-    console.log(url);
-    console.log('end url');
     res.redirect('/tempo-login?url='+url)
   }
 }
@@ -196,7 +193,8 @@ router.post('/view-products/add-to-cart/:id', verifyUserLogin, (req, res) => {
 })
 router.get('/tempo-login', (req, res) => {
   var id = req.query.url;
-  res.render('user/tempo-login',{url:id})
+  let loginErr = req.query.loginErr
+  res.render('user/tempo-login',{url:id,loginErr})
 })
 router.post('/tempo-login/:id', (req, res) => {
   let url = req.params.id
@@ -207,7 +205,7 @@ router.post('/tempo-login/:id', (req, res) => {
       res.redirect('/'+url)
     }
     else {
-      res.redirect('/tempo-login')
+      res.redirect('/tempo-login?loginErr=true')
     }
   })
 })
@@ -219,7 +217,7 @@ router.post('/tempo-login', (req, res) => {
       res.redirect('/')
     }
     else {
-      res.redirect('/tempo-login')
+      res.redirect('/tempo-login?loginErr=true')
     }
   })
 })

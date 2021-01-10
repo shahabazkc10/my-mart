@@ -21,7 +21,6 @@ router.get('/', verifyVendorLogin, function (req, res, next) {
     })
 
   })
-
 });
 router.get('/login', (req, res) => {
   let loginErr = req.query.loginErr
