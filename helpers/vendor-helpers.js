@@ -217,6 +217,34 @@ module.exports = {
                         })
 
                 }
+                else if (time >= openTime.opentime && time <= openTime.closetime) {
+                    console.log('time greater than opentime and time lesser than close time');
+                    db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                        {
+                            $set: {
+                                status: true
+                            }
+                        }).then(() => {
+                            db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
+                                resolve(vendor)
+                            })
+                        })
+
+                }
+                else if (time <= openTime.opentime && time >= openTime.closetime) {
+                    console.log('time lesser than opentime and time greater than close time');
+                    db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                        {
+                            $set: {
+                                status: true
+                            }
+                        }).then(() => {
+                            db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
+                                resolve(vendor)
+                            })
+                        })
+
+                }
             }
             else if (hoursopentime <= 12 && hoursclosetime <= 12) {
                 console.log('opentime is before 12pm and close time is before 12 pm');
