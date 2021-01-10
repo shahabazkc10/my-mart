@@ -5,40 +5,71 @@
         <!-- Icon -->
 
         <div class="fadeIn first">
-            {{#if loginErr}}
-            <p class="error text-danger">Invalid user details</p>
-            {{/if}}
-
+            <p style="display: none;" id="error" class="error text-danger">Invalid user details</p>
         </div>
         <div id="loginform">
             {{#if url}}
-            <form  action="/tempo-login{{url}}" method="POST" >
-            {{else}}
-            <p class="text-light">no id</p>
-            <form  action="/tempo-login" method="POST">
-            {{/if}}
-                <h1 style="color: green;" class="m-2 ">MY MART</h1>
-                <p><b>user login<span class="glyphicon glyphicon-user"></span></b></p>
-                <input type="text" id="email" value="shahabazkc@gmail.com"
-                 class="fadeIn second form-control"
-                    name="email" placeholder="Enter email">
-                <input type="password" value="muhammedsalah" id="password" class="fadeIn third form-control"
-                    name="password" placeholder="Enter password">
+            <form id="loginformdataT">
+                {{else}}
+                <p class="text-light">no id</p>
+                <form id="loginformdata">
+                    {{/if}}
+                    <h1 style="color: green;" class="m-2 ">MY MART</h1>
+                    <p><b>user login<span class="glyphicon glyphicon-user"></span></b></p>
+                    <input type="text" id="email" value="shahabazkc@gmail.com" class="fadeIn second form-control"
+                        name="email" placeholder="Enter email">
+                    <input type="password" value="muhammedsalah" id="password" class="fadeIn third form-control"
+                        name="password" placeholder="Enter password">
 
-                <button id="submit_btn" class="btn btn-primary fadeIn fourth">Log In</button>
-            </form>
-            <!-- Remind Passowrd -->
-            <div id="formFooter">
-                <a class="underlineHover text-dark mr-5" href="/signup">Create an Account</a>
-                <a class="underlineHover text-dark" href="#">Forgot Password?</a>
-            </div>
+                    <button id="submit_btn" class="btn btn-primary fadeIn fourth">Log In</button>
+                </form>
+                <!-- Remind Passowrd -->
+                <div id="formFooter">
+                    <a class="underlineHover text-dark mr-5" href="/signup">Create an Account</a>
+                    <a class="underlineHover text-dark" href="#">Forgot Password?</a>
+                </div>
         </div>
 
     </div>
 </div>
 
 <script>
-    
+    $('#loginformdata').on('submit', function (e) {
+        e.preventDefault()
+        var data = $(this).serialize();
+        $.ajax({
+            url: '/tempo-login',
+            method: 'POST',
+            data: data,
+            success: function (response) {
+                if (response.status) {
+                    location.replace('/')
+                }
+                else {
+                    $('#error').show()
+                }
+            }
+        })
+    })
+</script>
+<script>
+    $('#loginformdataT').on('submit', function (e) {
+        e.preventDefault()
+        var data = $(this).serialize();
+        $.ajax({
+            url: '/tempo-login{{url}}',
+            method: 'POST',
+            data: data,
+            success: function (response) {
+                if (response.status) {
+                    location.replace('{{url}}')
+                }
+                else {
+                    $('#error').show()
+                }
+            }
+        })
+    })
 </script>
 
 <style>

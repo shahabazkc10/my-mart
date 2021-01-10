@@ -202,10 +202,10 @@ router.post('/tempo-login/:id', (req, res) => {
     if (response.status) {
       req.session.user = response.user;
       req.session.userLoggedin = true; 
-      res.redirect('/'+url)
+      res.json({status:true,url:url})
     }
     else {
-      res.redirect('/tempo-login?loginErr=true')
+      res.json({status:false})
     }
   })
 })
@@ -214,10 +214,10 @@ router.post('/tempo-login', (req, res) => {
     if (response.status) {
       req.session.user = response.user;
       req.session.userLoggedin = true; 
-      res.redirect('/')
+      res.json({status:true})
     }
     else {
-      res.redirect('/tempo-login?loginErr=true')
+      res.json({status:false})
     }
   })
 })
