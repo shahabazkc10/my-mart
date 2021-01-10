@@ -250,8 +250,9 @@ module.exports = {
                         })
 
                 }
-                else if (time < openTime.opentime && time > openTime.closetime) {
+                else if (time < openTime.opentime && time >= openTime.closetime) {
                     console.log('time lesser than opentime and time greater than close time');
+                    console.log('changed');
                     db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
                         {
                             $set: {
@@ -465,87 +466,6 @@ module.exports = {
             }
 
         })
-        // currentTime(time)
-        // var hours = time.substring(0, 2);
-        // function currentTime(date) {
-        //       var minutes = time.substring(3, 5);
-        //       hours = parseFloat(hours)
-        //       minutes = parseFloat(minutes)
-        //       var ampm = hours >= 12 ? 'pm' : 'am';
-        //       hours = hours ? hours : 12; // the hour '0' should be '12'
-        //       hours = hours % 12;
-        //       minutes = minutes < 10 ? '0' + minutes : minutes;
-        //       return strTime;
-        //       var strTime = hours + ':' + minutes + '' + ampm;
-        //    let current = currentTime()
-        //   }
-        //   let vendorTimes = await db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) })
-        //   console.log(vendorTimes.opentime + " " + vendorTimes.closetime);
-        //   formatOpen(vendorTimes.opentime)
-        //   ///                                              open time 12 hours convertion - open time                               ///
-        //   var hours = vendorTimes.opentime.substring(0, 2);
-        //    var minutes = vendorTimes.opentime.substring(3, 5);
-        //   function formatOpen(date) {
-        //       hours = parseFloat(hours)
-        //       minutes = parseFloat(minutes)
-        //       var ampm = hours >= 12 ? 'pm' : 'am';
-        //       hours = hours % 12;
-        //       hours = hours ? hours : 12; // the hour '0' should be '12'
-        //       minutes = minutes < 10 ? '0' + minutes : minutes;
-        //       var strTime = hours + ':' + minutes + '' + ampm;
-        //       return strTime;
-        //   }
-        //    let openTime = formatOpen()
-        //    ///                                                            close time                                              ///
-        //    formatClose(vendorTimes.closetime)
-        //    var hours = vendorTimes.closetime.substring(0, 2);
-        //    var minutes = vendorTimes.closetime.substring(3, 5);
-        //    function formatClose(date) {
-        //        hours = parseFloat(hours)
-        //        minutes = parseFloat(minutes)
-        //        var ampm = hours >= 12 ? 'pm' : 'am';
-        //        hours = hours % 12;
-        //        hours = hours ? hours : 12; // the hour '0' should be '12'
-        //        minutes = minutes < 10 ? '0' + minutes : minutes;
-        //        var strTime = hours + ':' + minutes + '' + ampm;
-        //        return strTime;
-        //    }
-        //    let closeTime = formatClose()
-        //    console.log(openTime + " " + closeTime + " " + current);
-        //    db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
-        //if(current.includes('pm')&&openTime.includes('pm')&&closeTime.includes('pm')){
-        //  console.log('all pm');
-        //}
-        //else if(current.includes('am')&&openTime.includes('am')&&closeTime.includes('am')){
-        //    console.log('all am');
-        // }
-        //else if(current.includes('pm')&&openTime.includes('am')&&closeTime.includes('pm')){
-        //    console.log('current pm\nopen am\nclose pm');
-        //    var res = current.replace(/\D/g, "");
-        //    console.log(res);
-        //    if(current>=openTime&&current<closeTime){
-        //        console.log('opened');
-        //  }
-        //    else{
-        //        console.log('closed');
-        //    }
-        //}
-        //else if(current.includes('pm')&&openTime.includes('am')&&closeTime.includes('am')){
-        //  console.log(' current pm\n open am\n close am');
-        //}
-        //else if(current.includes('am')&&openTime.includes('pm')&&closeTime.includes('pm')){
-        //    console.log(' current am\n open pm\n close pm');
-        //}
-        //else if(current.includes('am')&&openTime.includes('am')&&closeTime.includes('pm')){
-        //    console.log(' current am\n open am\n close pm');
-        //}
-        //else if(current.includes('am')&&openTime.includes('pm')&&closeTime.includes('am')){
-        //    console.log(' current am\n open pm\n close am');
-        //}
-        //else if(current.includes('pm')&&openTime.includes('pm')&&closeTime.includes('am')){
-        //    console.log(' current pm \n open pm\n close am');
-        //}
-
     },
     updateTime: (vendorId, time) => {
         return new Promise((resolve, reject) => {
