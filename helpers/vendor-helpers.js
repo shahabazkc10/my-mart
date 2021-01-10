@@ -317,10 +317,11 @@ module.exports = {
                 console.log('opentime is after 12pm and close time is before 12 pm');
                 if (time >= openTime.opentime && time >= openTime.closetime) {
                     console.log('time greater than opentime and time greater than close time');
+                    console.log('changed');
                     db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
                         {
                             $set: {
-                                status: false
+                                status: true
                             }
                         }).then(() => {
                             db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
@@ -343,8 +344,9 @@ module.exports = {
                         })
 
                 }
-                else if (time <= openTime.opentime && time >= openTime.closetime) {
+                else if (time <= openTime.opentime && time > openTime.closetime) {
                     console.log('time less open and great close');
+                    console.log('changed');
                     db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
                         {
                             $set: {
