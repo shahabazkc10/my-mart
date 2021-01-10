@@ -205,7 +205,7 @@ module.exports = {
                             })
                         })
                     }
-                    else if(openTime.opentime<openTime.closetime){
+                    else if(openTime.opentime<=openTime.closetime){
                         console.log('closed');
                         db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
                         {
