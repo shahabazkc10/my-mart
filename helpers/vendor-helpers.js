@@ -203,13 +203,13 @@ module.exports = {
                         })
 
                 }
-                else if (time <= openTime.opentime && time <= openTime.closetime) {
+                else if (time < openTime.opentime && time <= openTime.closetime) {
                     console.log('time lesser than opentime and time lesser than close time');
                     console.log('changed');
                     db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
                         {
                             $set: {
-                                status: true
+                                status:true
                             }
                         }).then(() => {
                             db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
@@ -232,12 +232,12 @@ module.exports = {
                         })
 
                 }
-                else if (time <= openTime.opentime && time >= openTime.closetime) {
+                else if (time < openTime.opentime && time > openTime.closetime) {
                     console.log('time lesser than opentime and time greater than close time');
                     db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
                         {
                             $set: {
-                                status: true
+                                status: false
                             }
                         }).then(() => {
                             db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
