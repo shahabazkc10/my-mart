@@ -102,11 +102,12 @@ a:hover {
 }
 
 #myCarousel .carousel-item {
-    height: 70%;
-    min-height: 600px
+min-height: 500px;
 }
 
 #myCarousel {
+
+    
     position: relative;
     z-index: 1;
     background: #000;
