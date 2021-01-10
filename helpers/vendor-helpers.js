@@ -192,7 +192,7 @@ module.exports = {
                 if (time >= openTime.opentime && time >= openTime.closetime) {
                     console.log('time greater than opentime and time greater than close time');
                     console.log('changed with multiple extra conditions');
-                    if(openTime.opentime>openTime.closetime){
+                    if(openTime.opentime>=openTime.closetime){
                         console.log('opened');
                         db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
                         {
@@ -205,7 +205,7 @@ module.exports = {
                             })
                         })
                     }
-                    else if(openTime.opentime<=openTime.closetime){
+                    else if(openTime.opentime<openTime.closetime){
                         console.log('closed');
                         db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
                         {
