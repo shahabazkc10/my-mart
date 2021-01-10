@@ -68,10 +68,7 @@ router.get('/login', (req, res) => {
         res.redirect('/admin')
     }
     else {
-        req.session.adminLoginErr = false;
-        let loginErr = req.query.loginErr;
-        console.log(loginErr);
-        res.render('admin/login', { loginErr })
+        res.render('admin/login')
     }
 
 })
@@ -86,11 +83,10 @@ router.post('/login', (req, res) => {
         if (response.status) {
             req.session.admin = response.admin;
             req.session.adminLoggedIn = true;
-            res.redirect('/admin/')
+            res.json({ status: true })
         }
         else {
-            req.session.adminLoginErr = true;
-            res.redirect('/admin/login?loginErr=true')
+            res.json({ status: false })
         }
     })
 
@@ -179,9 +175,9 @@ router.get('/users', verifyAdminLogin, (req, res) => {
     adminHelpers.getUser().then((user) => {
         adminHelpers.totalUsers().then((totalUsers) => {
             adminHelpers.totalBanned().then((totalBanned) => {
-                adminHelpers.totalOrders().then((totalOrders)=>{
-                     res.render('admin/users', { user, admin: true,totalOrders, totalBanned, totalUsers, response: req.session.admin.username, totalUsers })
-                })  
+                adminHelpers.totalOrders().then((totalOrders) => {
+                    res.render('admin/users', { user, admin: true, totalOrders, totalBanned, totalUsers, response: req.session.admin.username, totalUsers })
+                })
             })
         })
     })
@@ -210,9 +206,9 @@ router.get('/edit-category/:id', verifyAdminLogin, (req, res) => {
     })
 
 })
-router.post('/edit-category/:id', verifyAdminLogin,(req, res) => {
+router.post('/edit-category/:id', verifyAdminLogin, (req, res) => {
     let id = req.params.id;
-    adminHelpers.updateCategory(id,req.body).then(() => {
+    adminHelpers.updateCategory(id, req.body).then(() => {
         res.redirect('/admin/settings')
         if (req.files.Image) {
             let image = req.files.Image
@@ -232,22 +228,22 @@ router.post('/new-category', verifyAdminLogin, (req, res) => {
         })
     })
 })
-router.get('/delete-category/:id',verifyAdminLogin,(req,res)=>{
+router.get('/delete-category/:id', verifyAdminLogin, (req, res) => {
     let id = req.params.id;
-    adminHelpers.deleteCategory(id).then(()=>{
+    adminHelpers.deleteCategory(id).then(() => {
         res.redirect('/admin/settings')
     })
 })
-router.get('/others',verifyAdminLogin,(req,res)=>{
-    adminHelpers.getOrderStatus().then((status)=>{
-        res.render('admin/others',{admin:true,status})
+router.get('/others', verifyAdminLogin, (req, res) => {
+    adminHelpers.getOrderStatus().then((status) => {
+        res.render('admin/others', { admin: true, status })
     })
-    
+
 })
-router.post('/newstatus',verifyAdminLogin,(req,res)=>{
+router.post('/newstatus', verifyAdminLogin, (req, res) => {
     let data = req.body
-    adminHelpers.addNewStatus(data).then(()=>{
-        res.json({status:true})
+    adminHelpers.addNewStatus(data).then(() => {
+        res.json({ status: true })
     })
 })
 

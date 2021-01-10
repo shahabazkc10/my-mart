@@ -6,14 +6,11 @@
     <!-- Icon -->
   
     <div class="fadeIn first">
-      {{#if loginErr}}
-        <p class="error text-danger">Invalid admin details</p>
-        {{/if}}
-       
+        <p id="error" style="display: none;" class="error text-danger">Invalid admin details</p>  
     </div>
 
     <!-- Login Form -->
-    <form action="/admin/login" method="POST">
+    <form id="loginform">
     <h1 style="color: green;" class="m-2 ">MY MART</h1>
     <p><b>Admin login<span class="glyphicon glyphicon-user"></span></b></p>
       <input type="text" id="login" value="shahabaz" class="fadeIn second form-control" name="username" placeholder="Enter username">
@@ -26,6 +23,25 @@
 
   </div>
 </div>
+<script>
+    $('#loginform').on('submit', function (e) {
+        e.preventDefault()
+        var data = $(this).serialize();
+        $.ajax({
+            url: '/admin/login',
+            method: 'POST',
+            data: data,
+            success: function (response) {
+                if (response.status) {
+                    location.replace('/admin')
+                }
+                else {
+                    $('#error').show()
+                }
+            }
+        })
+    })
+</script>
 <style>
 
 /* BASIC */

@@ -31,11 +31,11 @@ router.post('/login', (req, res) => {
     if (response.status) {
       req.session.vendor = response.vendor;
       req.session.vendorLoggedIn = true;
-      res.redirect('/vendor')
+      res.json({status:true})
     }
     else {
       req.session.vendorLoginErr = true;
-      res.redirect('/vendor/login?loginErr=true')
+      res.json({status:false})
     }
   })
 })
