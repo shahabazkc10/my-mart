@@ -160,6 +160,7 @@ module.exports = {
     getStatus: (vendorId) => {
         return new Promise(async (resolve, reject) => {
             var date = new Date();
+            console.log(date);
             var hours = date.getHours();
             var minutes = date.getMinutes();
             console.log(date);
@@ -224,7 +225,7 @@ module.exports = {
                     db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
                         {
                             $set: {
-                                status: false
+                                status: true
                             }
                         }).then(() => {
                             db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
