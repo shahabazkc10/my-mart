@@ -3,19 +3,48 @@
     <!-- don't send HTTP referer for privacy purpose and to use Google Maps Geocoding API without key -->
 </head>
 <div class="container mt-5">
-    <div class="w3-content w3-section" style="height: 400px;">
-        <center>
-            <img class="mySlides img-responsive"
-                src="https://c7.alamy.com/comp/PP98EJ/munich-germany-may-13-2017-munich-germany-fruits-shop-at-victuals-market-viktualienmarkt-PP98EJ.jpg"
-                style="height: 400px;width: 100%;">
-            <img class="mySlides img-responsive"
-                src="https://c7.alamy.com/comp/G1946P/beautiful-women-shopping-vegetables-and-fruits-in-supermarket-G1946P.jpg"
-                style="height: 400px;width: 100%;">
-            <img class="mySlides img-responsive"
-                src="https://c7.alamy.com/comp/EM3NN6/fruits-in-a-shop-EM3NN6.jpg"
-                style="height: 400px;width: 100%;">
-        </center>
+    <div id="myCarousel" class="carousel slide carousel-fade" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="mask flex-center">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-md-7 col-12 order-md-1 order-1">
+                                <center>
+                                    <h4>MY MART</h4>
+                                    <p>COMBO OFFERS</p> <br>
+                                </center>
 
+                            </div>
+                            <div class="col-md-5 col-12 order-md-2 order-2" style="top: 100px;"><img
+                                    src="https://c7.alamy.com/comp/BH6YBX/exotic-tropical-fruits-at-greengrocers-BH6YBX.jpg"
+                                    class="mx-auto mt-2 " alt="slide"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="mask flex-center">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-md-7 col-12 order-md-1 order-1" >
+                                <center>
+                                    <h4>MY MART</h4>
+                                    <p>MORE THAN 1000+ SELLERS ARE <br> NOW AVAILBALE AT MY MART ONLINE STORE</p> <br>
+                                </center>
+
+                            </div>
+                            <div class="col-md-5 col-12 order-md-2 order-2" style="top: 100px;"><img
+                                    src="https://c7.alamy.com/comp/BH6YBX/exotic-tropical-fruits-at-greengrocers-BH6YBX.jpg"
+                                    class="mx-auto mt-2" alt="slide"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev"> <span
+                class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="sr-only">Previous</span> </a>
+        <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next"> <span
+                class="carousel-control-next-icon" aria-hidden="true"></span> <span class="sr-only">Next</span> </a>
     </div>
     <center>
         <div class="mt-2">
@@ -31,32 +60,7 @@
             </p>
         </div>
         <div class="col-lg-3 col-md-6 col-8 mb-4 mt-4">
-            <script>
-                // hack Google Maps to bypass API v3 key (needed since 22 June 2016 http://googlegeodevelopers.blogspot.com.es/2016/06/building-for-scale-updates-to-google.html)
-                var target = document.head;
-                var observer = new MutationObserver(function (mutations) {
-                    for (var i = 0; mutations[i]; ++i) { // notify when script to hack is added in HTML head
-                        if (mutations[i].addedNodes[0].nodeName == "SCRIPT" && mutations[i].addedNodes[0].src.match(/\/AuthenticationService.Authenticate?/g)) {
-                            var str = mutations[i].addedNodes[0].src.match(/[?&]callback=.*[&$]/g);
-                            if (str) {
-                                if (str[0][str[0].length - 1] == '&') {
-                                    str = str[0].substring(10, str[0].length - 1);
-                                } else {
-                                    str = str[0].substring(10);
-                                }
-                                var split = str.split(".");
-                                var object = split[0];
-                                var method = split[1];
-                                window[object][method] = null; // remove censorship message function _xdc_._jmzdv6 (AJAX callback name "_jmzdv6" differs depending on URL)
-                                //window[object] = {}; // when we removed the complete object _xdc_, Google Maps tiles did not load when we moved the map with the mouse (no problem with OpenStreetMap)
-                            }
-                            observer.disconnect();
-                        }
-                    }
-                });
-                var config = { attributes: true, childList: true, characterData: true }
-                observer.observe(target, config);
-            </script>
+
             <script
                 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAUvMW5rkpS3oRtFC6oHbiNzoqBtGuPJRw&callback=initMap&libraries=places"></script>
             <script type="text/javascript">
@@ -84,91 +88,6 @@
 
 
 </div>
-<style>
-    .w3-content {
-        position: relative;
-        margin-top: 0em;
-    }
-
-    .w3-btn,
-    .w3-button {
-        border: none;
-        display: inline-block;
-        outline: 0;
-        padding: 8px 16px;
-        vertical-align: middle;
-        overflow: hidden;
-        text-decoration: none;
-        color: inherit;
-        background-color: inherit;
-        text-align: center;
-        cursor: pointer;
-        white-space: nowrap
-    }
-
-    .w3-btn,
-    .w3-button {
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none
-    }
-
-    .w3-disabled,
-    .w3-btn:disabled,
-    .w3-button:disabled {
-        cursor: not-allowed;
-        opacity: 0.3
-    }
-
-    .w3-disabled *,
-    :disabled * {
-        pointer-events: none
-    }
-
-    .w3-bar-block .w3-dropdown-hover .w3-button,
-    .w3-bar-block .w3-dropdown-click .w3-button {
-        width: 100%;
-        text-align: left;
-        padding: 8px 16px
-    }
-
-    .w3-button:hover {
-        color: #000 !important;
-        background-color: #ccc !important
-    }
-
-    .w3-content button {
-        position: absolute;
-        top: 32%;
-    }
-
-    .w3-display-right {
-        right: 0
-    }
-
-    .w3-display-left {
-        left: 0
-    }
-</style>
-<script>
-    var myIndex = 0;
-    carousel();
-
-    function carousel() {
-        var i;
-        var x = document.getElementsByClassName("mySlides");
-        for (i = 0; i < x.length; i++) {
-            x[i].style.display = "none";
-        }
-        myIndex++;
-        if (myIndex > x.length) { myIndex = 1 }
-        x[myIndex - 1].style.display = "block";
-        setTimeout(carousel, 2000); // Change image every 2 seconds
-    }
-</script>
 <section>
     {{#if vendors}}
     <center>
@@ -214,117 +133,47 @@
 
 </section>
 <div class="wrapperfooter">
-        
-        <div class="push">
 
+    <div class="push">
+
+    </div>
+</div>
+<div class="footer text-light" id="footerMymart">
+    <footer id="sticky-footer" class="py-4 bg-dark text-light text-light-50">
+        <div class="flex-center ml-3">
+            <ul class="ml-3">
+                <li><a title="Go to Home page" href="/" class="text-light"> Home page</a></li>
+                <li><a title="Go to Orders section" href="/view-orders" class="text-light"> Your Order</a></li>
+                <li><a title="Go to Cart" href="/cart" class="text-light"> Cart</a></li>
+                <li><a title="Go to Address section" href="/manage-address" class="text-light"> Manage address</a>
+                </li>
+            </ul>
         </div>
-    </div>
-
-    <style>
-        html,
-        body{
-            height: 70%;
-        }
-        .wrapperfooter{
-            min-height: 100%;
-            height: auto !important;
-            height: 100%;
-            margin: 0 auto -142px;
-        }
-        footer {
-            left: 3px;
-            bottom: 0px;
-            width: 100%;
-            right: 3px;
-            margin-top: 100px;
-        }
-
-        .footer,
-        .push {
-            height: 142px;
-        }
-    </style>
-    <div class="footer text-light" id="footerMymart">
-        <footer id="sticky-footer" class="py-4 bg-dark text-light text-light-50">
-            <div class="flex-center ml-3">
-                <ul class="ml-3">
-                    <li><a title="Go to Home page" href="/" class="text-light"> Home page</a></li>
-                    <li><a title="Go to Orders section" href="/view-orders" class="text-light"> Your Order</a></li>
-                    <li><a title="Go to Cart" href="/cart" class="text-light"> Cart</a></li>
-                    <li><a title="Go to Address section" href="/manage-address" class="text-light"> Manage address</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="container text-center">
-                <h5>FOLLOW US ON SOCIAL MEDIA</h5>
-                <section id="lab_social_icon_footer">
-                    <!-- Include Font Awesome Stylesheet in Header -->
-                    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-                    <div class="container">
-                        <div class="text-center center-block">
-                            <a href="https://www.facebook.com/bootsnipp"><i id="social-fb"
-                                    class="fa fa-facebook-square fa-3x social"></i></a>
-                            <a href="https://twitter.com/bootsnipp"><i id="social-tw"
-                                    class="fa fa-twitter-square fa-3x social"></i></a>
-                            <a href="https://plus.google.com/+Bootsnipp-page"><i id="social-gp"
-                                    class="fa fa-google-plus-square fa-3x social"></i></a>
-                            <a href="mailto:#"><i id="social-em" class="fa fa-envelope-square fa-3x social"></i></a>
-                            <a href=""><i id="social-em" class="fa fa-instagram fa-3x social"></i></a>
-                        </div>
+        <div class="container text-center">
+            <h5>FOLLOW US ON SOCIAL MEDIA</h5>
+            <section id="lab_social_icon_footer">
+                <!-- Include Font Awesome Stylesheet in Header -->
+                <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+                <div class="container">
+                    <div class="text-center center-block">
+                        <a href="https://www.facebook.com/bootsnipp"><i id="social-fb"
+                                class="fa fa-facebook-square fa-3x social"></i></a>
+                        <a href="https://twitter.com/bootsnipp"><i id="social-tw"
+                                class="fa fa-twitter-square fa-3x social"></i></a>
+                        <a href="https://plus.google.com/+Bootsnipp-page"><i id="social-gp"
+                                class="fa fa-google-plus-square fa-3x social"></i></a>
+                        <a href="mailto:#"><i id="social-em" class="fa fa-envelope-square fa-3x social"></i></a>
+                        <a href=""><i id="social-em" class="fa fa-instagram fa-3x social"></i></a>
                     </div>
-                </section>
-            </div>
-            <center><small class="text-center">Copyright &copy; MY MART 2020-2021</small></center>
+                </div>
+            </section>
+        </div>
+        <center><small class="text-center">Copyright &copy; MY MART 2020-2021</small></center>
 
-        </footer>
-    </div>
-    <style>
-        #lab_social_icon_footer {
-            padding: 0px 0;
-            background-color: white;
-        }
+    </footer>
+</div>
 
-        #lab_social_icon_footer a {
-            color: #333;
-        }
-
-        #lab_social_icon_footer .social:hover {
-            -webkit-transform: scale(1.1);
-            -moz-transform: scale(1.1);
-            -o-transform: scale(1.1);
-        }
-
-        #lab_social_icon_footer .social {
-            -webkit-transform: scale(0.8);
-            /* Browser Variations: */
-
-            -moz-transform: scale(0.8);
-            -o-transform: scale(0.8);
-            -webkit-transition-duration: 0.5s;
-            -moz-transition-duration: 0.5s;
-            -o-transition-duration: 0.5s;
-        }
-
-        /*
-    Multicoloured Hover Variations
-*/
-
-        #lab_social_icon_footer #social-fb:hover {
-            color: #3B5998;
-        }
-
-        #lab_social_icon_footer #social-tw:hover {
-            color: #4099FF;
-        }
-
-        #lab_social_icon_footer #social-gp:hover {
-            color: #d34836;
-        }
-
-        #lab_social_icon_footer #social-em:hover {
-            color: red;
-        }
-    </style>
 
 
 <link rel="stylesheet" href="/css/user/user.css" type="text/css">
+<script src="/javascripts/user/user.js"></script>
