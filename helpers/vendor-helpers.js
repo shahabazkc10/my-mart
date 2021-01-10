@@ -218,10 +218,11 @@ module.exports = {
 
                 }
             }
-            else if (hoursopentime < 12 && hoursclosetime < 12) {
+            else if (hoursopentime <= 12 && hoursclosetime <= 12) {
                 console.log('opentime is before 12pm and close time is before 12 pm');
                 if (time >= openTime.opentime && time >= openTime.closetime) {
                     console.log('time greater than opentime and time greater than close time');
+                    console.log('fixed');
                     db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
                         {
                             $set: {
