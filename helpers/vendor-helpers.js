@@ -205,10 +205,11 @@ module.exports = {
                 }
                 else if (time <= openTime.opentime && time <= openTime.closetime) {
                     console.log('time lesser than opentime and time lesser than close time');
+                    console.log('changed');
                     db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
                         {
                             $set: {
-                                status: true
+                                status: false
                             }
                         }).then(() => {
                             db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
