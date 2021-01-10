@@ -11,7 +11,12 @@
 
         </div>
         <div id="loginform">
+            {{#if url}}
+            <form  action="/tempo-login{{url}}" method="POST" >
+            {{else}}
+            <p class="text-light">no id</p>
             <form  action="/tempo-login" method="POST">
+            {{/if}}
                 <h1 style="color: green;" class="m-2 ">MY MART</h1>
                 <p><b>user login<span class="glyphicon glyphicon-user"></span></b></p>
                 <input type="text" id="email" value="shahabazkc@gmail.com"

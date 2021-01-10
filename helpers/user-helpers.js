@@ -42,11 +42,11 @@ module.exports = {
             resolve(categories)
         })
     },
-    getProducts: (vendorId,catId) => {
+    getProducts: (vendorId, catId) => {
         return new Promise(async (resolve, reject) => {
             let category = await db.get().collection(collection.CATEGORY_COLLECTION).findOne({ _id: ObjectID(catId) })
             category = category.name;
-            let products = await db.get().collection(collection.PRODUCTS_COLLECTION).find({storeId:vendorId, category: category,productStatus:true }).toArray()
+            let products = await db.get().collection(collection.PRODUCTS_COLLECTION).find({ storeId: vendorId, category: category, productStatus: true }).toArray()
             resolve(products)
         })
     },
@@ -500,7 +500,7 @@ module.exports = {
                 totalAmount: total,
                 totalItems: totalItems,
                 status: status,
-                delivered:false,
+                delivered: false,
                 date: new Date()
             }
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response) => {
@@ -526,7 +526,7 @@ module.exports = {
             });
         })
     },
-    verifyPayment: (details,orderId) => {
+    verifyPayment: (details, orderId) => {
         return new Promise((resolve, reject) => {
             const crypto = require('crypto')
             let hmac = crypto.createHmac('sha256', 'Iyh3NzphTK7naAmLqgTXlTOB')
@@ -536,15 +536,15 @@ module.exports = {
                 resolve()
             } else {
                 db.get().collection(collection.ORDER_COLLECTION)
-                .updateOne({ _id: ObjectID(orderId) },
-                    {
-                        $set: {
-                            status: 'rejected',
-                            paymentGateway:'failed'
-                        }
-                    }).then(() => {
-                        resolve()
-                    })
+                    .updateOne({ _id: ObjectID(orderId) },
+                        {
+                            $set: {
+                                status: 'rejected',
+                                paymentGateway: 'failed'
+                            }
+                        }).then(() => {
+                            resolve()
+                        })
                 reject()
             }
         })
@@ -570,7 +570,7 @@ module.exports = {
             })
         })
     },
-    changeProductQuantity: (details,userId) => {
+    changeProductQuantity: (details, userId) => {
         details.count = parseInt(details.count);
         details.quantity = parseInt(details.quantity);
         return new Promise((resolve, reject) => {
@@ -621,24 +621,50 @@ module.exports = {
             resolve(vendor)
         })
     },
-    getOrderProducts:(userId)=>{
-        return new Promise((resolve,reject)=>{
-            db.get().collection(collection.ORDER_COLLECTION).find({userId:ObjectID(userId),$or:[{status:'placed'},{status:'Order Delivered'}]}).toArray().then((orders)=>{
+    getOrderProducts: (userId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.ORDER_COLLECTION).find({ userId: ObjectID(userId), $or: [{ status: 'placed' }, { status: 'Order Delivered' }] }).toArray().then((orders) => {
                 resolve(orders)
             })
         })
     },
-    getOrderDetails:(id)=>{
-        return new Promise((resolve,reject)=>{
-            db.get().collection(collection.ORDER_COLLECTION).findOne({_id:ObjectID(id)}).then((orderDetail)=>{
+    getOrderDetails: (id) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.ORDER_COLLECTION).findOne({ _id: ObjectID(id) }).then((orderDetail) => {
                 resolve(orderDetail)
             })
         })
     },
-    getVendors:()=>{
-        return new Promise(async(resolve,reject)=>{
-            let vendors = await db.get().collection(collection.VENDOR_COLLECTION).find({status:true}).toArray()
+    getVendors: () => {
+        return new Promise(async (resolve, reject) => {
+            let vendors = await db.get().collection(collection.VENDOR_COLLECTION).find({ status: true }).toArray()
             resolve(vendors)
-            })
+        })
+    },
+    loginDataTempo: (loginData) => {
+        return new Promise(async (resolve, rejectt) => {
+            let response = {}
+            let userEmail = await db.get().collection(collection.USER_COLLECTION).findOne({ email: loginData.email })
+            if (userEmail) {
+                let password = userEmail.password;
+                bcrypt.compare(loginData.password, password).then((status) => {
+                    if (status) {
+                        response.user = userEmail;
+                        response.status = true;
+                        response.user = userEmail;
+                        response.status = true;
+                        resolve(response)
+                    }
+                    else{
+                        console.log('login failed. password incorrect');
+                        resolve({status:false})
+                    }
+                })
+
+            } else {
+                console.log("Login failed Email incorrect");
+                resolve({ status: false })
+            }
+        })
     }
 }

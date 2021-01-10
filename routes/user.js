@@ -16,7 +16,11 @@ var verifyUserLogin = (req, res, next) => {
     next()
   }
   else {
-    res.redirect('/tempo-login')
+    let url = req.url;
+    console.log('url');
+    console.log(url);
+    console.log('end url');
+    res.redirect('/tempo-login?url='+url)
   }
 }
 
@@ -191,20 +195,35 @@ router.post('/view-products/add-to-cart/:id', verifyUserLogin, (req, res) => {
   })
 })
 router.get('/tempo-login', (req, res) => {
-  res.render('user/tempo-login')
+  var id = req.query.url;
+  res.render('user/tempo-login',{url:id})
 })
-router.post('/tempo-login', (req, res) => {
-  userHelpers.loginData(req.body).then((response) => {
+router.post('/tempo-login/:id', (req, res) => {
+  let url = req.params.id
+  userHelpers.loginDataTempo(req.body).then((response) => {
     if (response.status) {
       req.session.user = response.user;
-      req.session.userLoggedin = true;
-      res.redirect('/')
+      req.session.userLoggedin = true; 
+      res.redirect('/'+url)
     }
     else {
-      res.redirect('user/tempo-login')
+      res.redirect('/tempo-login')
     }
   })
 })
+router.post('/tempo-login', (req, res) => {
+  userHelpers.loginDataTempo(req.body).then((response) => {
+    if (response.status) {
+      req.session.user = response.user;
+      req.session.userLoggedin = true; 
+      res.redirect('/')
+    }
+    else {
+      res.redirect('/tempo-login')
+    }
+  })
+})
+
 router.get('/cart', verifyUserLogin, async (req, res) => {
   let userId = req.session.user._id;
   userHelpers.getCategory().then(async (categories) => {
@@ -357,12 +376,6 @@ router.get('/order-detail/:id', verifyUserLogin, async (req, res) => {
   let orderId = req.params.id;
   userHelpers.getOrder(orderId).then(async (orderDetail) => {
     let vendorDetail = await userHelpers.getVendor(orderDetail.vendor)
-    //  let values = Object.entries(orderDetail.products[0].products)
-    //  let length = values.length;
-    //  let result = []
-    //  for (i = 0; i < length; i++) {
-    //    result.push(values[i][1]['item'])
-    // }
     res.render('user/order-detail', { user: true, response: req.session.user.username, orderDetail, vendorDetail })
   })
 
