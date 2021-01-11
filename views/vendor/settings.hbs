@@ -78,12 +78,20 @@
                 url: '/vendor/time/{{id}}',
                 method: 'POST',
                 data: data,
-                success: function () {
-                    document.getElementById("changedTime").style.display = "block";
-                    setTimeout(function () {
-                        document.getElementById("changedTime").style.display = "none";
-                    }, 3000);
-                    $('#settingssection').load('settings #settingssection')
+                success: function (response) {
+                    if (response.status) {
+                        document.getElementById("changedTime").style.display = "block";
+                        setTimeout(function () {
+                            document.getElementById("changedTime").style.display = "none";
+                        }, 3000);
+                        $('#settingssection').load('settings #settingssection')
+                    }
+                    else{
+                        location.replace('/vendor/settings')
+                    }
+                },
+                err: function () {
+                    location.replace('/vendor/settings')
                 }
             })
         })

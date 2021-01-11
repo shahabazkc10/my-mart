@@ -166,13 +166,11 @@ router.get('/opennow', verifyVendorLogin, (req, res) => {
 })
 router.post('/time/:id', verifyVendorLogin, (req, res) => {
   let id = req.params.id;
-
   vendorHelpers.updateTime(id, req.body).then(() => {
-    res.redirect('/vendor/settings')
+    res.json({status:true})
   })
 })
 router.get('/add-user', verifyVendorLogin, (req, res) => {
-
   res.render('vendor/add-user', { response: req.session.vendor.username })
 })
 router.post('/new-user', verifyVendorLogin, (req, res) => {
@@ -186,7 +184,6 @@ router.post('/new-user', verifyVendorLogin, (req, res) => {
         console.log(err);
       }
     })
-
   })
 })
 router.get('/user-edit/:id', verifyVendorLogin, (req, res) => {
