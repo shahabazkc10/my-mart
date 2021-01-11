@@ -721,7 +721,7 @@ module.exports = {
                             db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
                                 {
                                     $set: {
-                                        status: true
+                                        status: false
                                     }
                                 })
                         }

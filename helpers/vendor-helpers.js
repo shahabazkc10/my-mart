@@ -258,7 +258,7 @@ module.exports = {
                         db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
                         {
                             $set: {
-                                status: true
+                                status: false
                             }
                         }).then(() => {
                             db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
@@ -266,7 +266,7 @@ module.exports = {
                             })
                         })
                     }
-                    else if(openTime.opentime<openTime.closetime){
+                    else if(openTime.opentime<=openTime.closetime){
                         console.log('closed');
                         db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
                         {
