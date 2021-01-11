@@ -637,7 +637,237 @@ module.exports = {
     },
     getVendors: () => {
         return new Promise(async (resolve, reject) => {
-            let vendors = await db.get().collection(collection.VENDOR_COLLECTION).find({ status: true }).toArray()
+            let vendors = await db.get().collection(collection.VENDOR_COLLECTION).find().toArray()
+            let totalVendor = vendors.length;
+            var date = new Date();
+            console.log(date);
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            for (i = 0; i < totalVendor; i++) {
+                let vendorId = vendors[i]._id;
+                if (minutes > 9 && hours > 9) {
+                    var time = (hours + ':' + minutes)
+                }
+                else if (minutes > 9 && hours < 10) {
+                    var time = ('0' + hours + ':' + minutes)
+                }
+                else if (minutes < 10 && hours > 9) {
+                    var time = (hours + ':0' + minutes)
+                }
+                else if (minutes < 10 && hours < 10) {
+                    var time = ('0' + hours + ':0' + minutes)
+                }
+                console.log(time);
+                let openTime = await db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) })
+                let hoursopentime = openTime.opentime
+                let hoursclosetime = openTime.closetime
+                console.log('start');
+                hoursopentime = parseInt(hoursopentime)
+                hoursclosetime = parseInt(hoursclosetime)
+                console.log(hoursopentime);
+                console.log(hoursclosetime);
+                console.log('end');
+                console.log(openTime.opentime + "   " + openTime.closetime);
+                if (hoursopentime >= 12 && hoursclosetime >= 12) {
+                    console.log('opentime is after 12pm and close time is after 12pm');
+                    if (time >= openTime.opentime && time >= openTime.closetime) {
+                        console.log('time greater than opentime and time greater than close time');
+                        console.log('changed with multiple extra conditions');
+                        if (openTime.opentime >= openTime.closetime) {
+                            console.log('opened');
+                            db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                                {
+                                    $set: {
+                                        status: true
+                                    }
+                                })
+                        }
+                        else if (openTime.opentime < openTime.closetime) {
+                            console.log('closed');
+                            db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                                {
+                                    $set: {
+                                        status: false
+                                    }
+                                })
+                        }
+                    }
+                    else if (time < openTime.opentime && time < openTime.closetime) {
+                        console.log('time lesser than opentime and time lesser than close time');
+                        console.log('changed');
+                        db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                            {
+                                $set: {
+                                    status: false
+                                }
+                            })
+                    }
+                    else if (time >= openTime.opentime && time <= openTime.closetime) {
+                        console.log('time greater than opentime and time lesser than close time');
+                        console.log('correct');
+                        db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                            {
+                                $set: {
+                                    status: true
+                                }
+                            })
+                    }
+                    else if (time < openTime.opentime && time >= openTime.closetime) {
+                        console.log('time lesser than opentime and time greater than close time');
+                        console.log('changed');
+                        console.log('changed with multiple extra conditions');
+                        if (openTime.opentime >= openTime.closetime) {
+                            console.log('opened');
+                            db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                                {
+                                    $set: {
+                                        status: true
+                                    }
+                                })
+                        }
+                        else if (openTime.opentime < openTime.closetime) {
+                            console.log('closed');
+                            db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                                {
+                                    $set: {
+                                        status: false
+                                    }
+                                })
+                        }
+                    }
+                }
+                else if (hoursopentime <= 12 && hoursclosetime <= 12) {
+                    console.log('opentime is before 12pm and close time is before 12 pm');
+                    if (time >= openTime.opentime && time >= openTime.closetime) {
+                        console.log('time greater than opentime and time greater than close time');
+                        console.log('fixed');
+                        db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                            {
+                                $set: {
+                                    status: true
+                                }
+                            })
+
+                    }
+                    else if (time <= openTime.opentime && time <= openTime.closetime) {
+                        console.log('time less than opentime and time less than closetime');
+                        db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                            {
+                                $set: {
+                                    status: true
+                                }
+                            })
+                    }
+                    else if (time <= openTime.opentime && time >= openTime.closetime) {
+                        console.log('time less than opentime and time greater than closetime');
+                        db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                            {
+                                $set: {
+                                    status: false
+                                }
+                            })
+                    }
+                    else if (time >= openTime.opentime && time <= openTime.closetime) {
+                        console.log('time greater than opentime and time less than closetime');
+                        db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                            {
+                                $set: {
+                                    status: true
+                                }
+                            })
+                    }
+                    else {
+                        console.log('not working');
+                    }
+                }
+                else if (hoursopentime >= 12 && hoursclosetime <= 12) {
+                    console.log('opentime is after 12pm and close time is before 12 pm');
+                    if (time >= openTime.opentime && time >= openTime.closetime) {
+                        console.log('time greater than opentime and time greater than close time');
+                        console.log('changed');
+                        db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                            {
+                                $set: {
+                                    status: true
+                                }
+                            })
+                    }
+                    else if (time <= openTime.opentime && time <= openTime.closetime) {
+                        console.log('time lesser than opentime and time less than close time');
+                        db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                            {
+                                $set: {
+                                    status: true
+                                }
+                            })
+                    }
+                    else if (time <= openTime.opentime && time > openTime.closetime) {
+                        console.log('time less open and great close');
+                        console.log('changed');
+                        db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                            {
+                                $set: {
+                                    status: false
+                                }
+                            })
+                    }
+                    else if (time >= openTime.opentime && time <= openTime.closetime) {
+                        console.log('time greater open and less close');
+                        db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                            {
+                                $set: {
+                                    status: true
+                                }
+                            })
+                    }
+                    else {
+                        console.log('not working');
+                    }
+                }
+                else if (hoursopentime <= 12 && hoursclosetime >= 12) {
+                    console.log('opentime is before 12pm and close time is after 12 pm');
+                    if (time >= openTime.opentime && time >= openTime.closetime) {
+                        console.log('time greater than opentime and time greater than close time');
+                        db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                            {
+                                $set: {
+                                    status: false
+                                }
+                            })
+                    }
+                    else if (time <= openTime.opentime && time <= openTime.closetime) {
+                        console.log('time lesser than opentime and time lesser than close time');
+                        db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                            {
+                                $set: {
+                                    status: false
+                                }
+                            })
+                    }
+                    else if (time <= openTime.opentime && time >= openTime.closetime) {
+                        console.log('time lesser than opentime and time greater than close time');
+                        db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                            {
+                                $set: {
+                                    status: false
+                                }
+                            })
+                    }
+                    else if (time >= openTime.opentime && time <= openTime.closetime) {
+                        console.log('time greater than opentime and time lesser than close time');
+                        db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
+                            {
+                                $set: {
+                                    status: true
+                                }
+                            })
+                    }
+                }
+                else {
+                    console.log('not working');
+                }
+            }
+            vendors = await db.get().collection(collection.VENDOR_COLLECTION).find({ status: true }).toArray()
             resolve(vendors)
         })
     },
@@ -655,9 +885,9 @@ module.exports = {
                         response.status = true;
                         resolve(response)
                     }
-                    else{
+                    else {
                         console.log('login failed. password incorrect');
-                        resolve({status:false})
+                        resolve({ status: false })
                     }
                 })
 

@@ -163,7 +163,6 @@ module.exports = {
             console.log(date);
             var hours = date.getHours();
             var minutes = date.getMinutes();
-            console.log(date);
             if (minutes > 9 && hours > 9) {
                 var time = (hours + ':' + minutes)
             }
@@ -226,7 +225,7 @@ module.exports = {
                     db.get().collection(collection.VENDOR_COLLECTION).updateOne({ _id: ObjectID(vendorId) },
                         {
                             $set: {
-                                status:true
+                                status:false
                             }
                         }).then(() => {
                             db.get().collection(collection.VENDOR_COLLECTION).findOne({ _id: ObjectID(vendorId) }).then((vendor) => {
